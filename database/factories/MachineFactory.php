@@ -20,10 +20,10 @@ class MachineFactory extends Factory
             'name' => fake()->unique()->word(),
             'serial_number' => fake()->unique()->word(),
             'status' => fake()->randomElement(['active', 'under maintenance', 'attention']),
-            'location' => fake()->optional()->word(),
+            'location' => fake()->word(),
             'image_path' => 'path/to/image.jpg',
-            'description' => fake()->optional()->text(),
-            'unit-per-hour' => fake()->numberBetween(1, 100),
+            'description' => fake()->text(),
+            'unit_per_hour' => fake()->numberBetween(1, 100), 
         ];
     }
 }

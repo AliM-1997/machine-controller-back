@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('serial_number')->unique();
-            $table->enum('status',['active','under maintenance','attenction'])->default('active');
+            $table->enum('status', ['active', 'under maintenance', 'attention'])->default('active');
             $table->string('location')->nullable();
             $table->string('image_path')->nullable();
             $table->text('description')->nullable();
-            $table->integer('unit-per-hour');
+            $table->integer('unit_per_hour')->default(0);
             $table->timestamps();
         });
     }

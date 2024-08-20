@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\Machine;
 class MachineSeeder extends Seeder
 {
     /**
@@ -12,6 +12,6 @@ class MachineSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Machine::factory(50)->create();
     }
 }
