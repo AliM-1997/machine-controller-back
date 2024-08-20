@@ -17,4 +17,8 @@ class Task extends Model
         "dueDate",
         "location"
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
