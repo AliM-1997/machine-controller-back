@@ -1,7 +1,9 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\User;
+use App\Models\Machine;
+use App\Models\SparePart;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,13 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'machine_id' => Machine::factory(),
+            'SparePart_id' => SparePart::factory(),
+            'jobDescription' => $this->faker->sentence(),
+            'assignedDate' => $this->faker->date(),
+            'dueDate' => $this->faker->date(),
+            'location' => $this->faker->address(),
         ];
     }
 }
