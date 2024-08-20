@@ -11,7 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('spareParts' ,function(Blueprint $table){
+            $table->id();
+            $table->string("name");
+            $table->string("serial_number")->unique();
+            $table->integer("quantity")->require();
+            $table->text("description")->nullable();
+            $table->timestamps();
+
+        });
     }
 
     /**
