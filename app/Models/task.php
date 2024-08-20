@@ -21,4 +21,8 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function machine()
+    {
+        return $this->belongsTo(Machine::class, 'machine_name', 'name');
+    }
 }
