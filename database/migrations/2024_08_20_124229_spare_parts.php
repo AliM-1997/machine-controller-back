@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spareParts' ,function(Blueprint $table){
+        Schema::create('spare_Parts' ,function(Blueprint $table){
             $table->id();
             $table->string("name");
             $table->string("serial_number")->unique();
-            $table->integer("quantity")->require();
+            $table->integer("quantity");
             $table->text("description")->nullable();
-            $table->string("image_path")->unique();
+            $table->string("image_path")->nullable();
             $table->timestamps();
 
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spareParts');
+        Schema::dropIfExists('spare_Parts');
     }
 };

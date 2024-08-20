@@ -18,7 +18,7 @@ class SparePartFactory extends Factory
     {
         return [
             'name' => fake()->unique()->word(),
-            'serial_number' => fake()->unique()->word(),
+            'serial_number' => fake()->unique()->uuid(),
             'quantity' => fake()->numberBetween(1, 100),
             'description' => fake()->optional()->text(),
             'image_path' => 'path/to/image.jpg',
