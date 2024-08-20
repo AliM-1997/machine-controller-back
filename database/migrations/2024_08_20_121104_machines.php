@@ -11,7 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('machines', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('serial number')->unique();
+            $table->enum('status',['active','under maintenance','attenction'])->default('active');
+            $table->string('location')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('unit-per-hour');
+            $table->timestamps();
+        });
     }
 
     /**
