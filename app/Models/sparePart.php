@@ -16,7 +16,7 @@ class SparePart extends Model
         'description',
         'image_path'
     ];
-    public function sparePart()
+    public function task()
     {
         return $this->hasMany(Task::class);
     }
