@@ -11,7 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('machineStatistics', function(Blueprint $table){
+            $table->id();
+            $table->string("machine_name");
+            $table->foreign("machine_name")->references("name")->on("machines")->onUpdate("cascade")->onDelete("cascade");
+            
+        });
     }
 
     /**
@@ -19,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('machinStatistics');
     }
 };
