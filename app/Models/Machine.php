@@ -18,5 +18,9 @@ class Machine extends Model
         'description',
         'unit_per_hour'    
     ];
+    public function task()
+    {
+        return $this->hasMany(Task::class, 'machine_name', 'name'); 
+    }
 }
 
