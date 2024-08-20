@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class MachineStatistic extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'machine_name',
+        'operational_hours',
+        'MTTR',
+        'MTTD',
+        'MTBF',
+        'upTime',
+        'downTime',
+        'efficiency',
+        'availability',
+        'date'
+    ];
 }
