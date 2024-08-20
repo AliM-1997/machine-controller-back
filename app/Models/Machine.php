@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Machine extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'serial_number',
+        'status',
+        'location',
+        'image_path',
+        'description',
+        'unit_per_hour'    
+    ];
 }
+
