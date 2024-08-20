@@ -21,7 +21,7 @@ class TaskFactory extends Factory
         return [
             'user_id' => User::factory(),
             'machine_id' => Machine::factory(),
-            'SparePart_id' => SparePart::factory(),
+            'Spare_Part_id' => SparePart::factory(),
             'jobDescription' => $this->faker->sentence(),
             'assignedDate' => $this->faker->date(),
             'dueDate' => $this->faker->date(),
