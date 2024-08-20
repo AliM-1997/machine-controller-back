@@ -20,7 +20,11 @@ class Machine extends Model
     ];
     public function task()
     {
-        return $this->hasMany(Task::class, 'machine_name', 'name'); 
+        return $this->hasMany(Task::class); 
+    }
+    public function statistic()
+    {
+        return $this->hasMany(MachineStatistic::class);
     }
 }
 

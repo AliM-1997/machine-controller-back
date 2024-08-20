@@ -23,6 +23,6 @@ class Task extends Model
     }
     public function machine()
     {
-        return $this->belongsTo(Machine::class, 'machine_name', 'name');
+        return $this->belongsTo(Machine::class);
     }
 }

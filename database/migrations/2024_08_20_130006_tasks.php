@@ -15,10 +15,8 @@ return new class extends Migration
             Schema::create('tasks', function (Blueprint $table) {
                 $table->id(); 
                 $table->foreignId("user_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
-                $table->string('machine_name');
-                $table->foreign('machine_name')->references('name')->on('machines')->onUpdate('cascade')->onDelete('cascade');
-                $table->string('sparePart_serial_number')->nullable();
-                $table->foreign("sparePart_serial_number")->references("serial_number")->on("spareParts")->onUpdate('cascade')->onDelete('set null');
+                $table->foreignId("machine_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
+                $table->foreignId("SparePart_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
                 $table->text('jobDescription'); 
                 $table->date('assignedDate'); 
                 $table->date('dueDate');

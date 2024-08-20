@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('machineStatistics', function(Blueprint $table){
             $table->id();
-            $table->string("machine_name");
-            $table->foreign("machine_name")->references("name")->on("machines")->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId("machine_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
             $table->decimal("operational_hours",10,2);
             $table->decimal("MTTR",10,2);
             $table->decimal("MTTD",10,2);
