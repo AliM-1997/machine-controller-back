@@ -17,7 +17,13 @@ class MachineFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->unique()->word(),
+            'serial_number' => fake()->unique()->word(),
+            'status' => fake()->randomElement(['active', 'under maintenance', 'attention']),
+            'location' => fake()->optional()->word(),
+            'image_path' => fake()->optional()->imageUrl(),
+            'description' => fake()->optional()->text(),
+            'unit-per-hour' => fake()->numberBetween(1, 100),
         ];
     }
 }
