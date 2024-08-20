@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('machines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('serial number')->unique();
+            $table->string('serial_number')->unique();
             $table->enum('status',['active','under maintenance','attenction'])->default('active');
             $table->string('location')->nullable();
             $table->text('description')->nullable();

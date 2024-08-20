@@ -16,7 +16,9 @@ return new class extends Migration
                 $table->id(); 
                 $table->foreignId("user_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
                 $table->string('machine_serial_number');
-                $table->foreign('machine_serial_number')->references('serial number')->on('machines')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('machine_serial_number')->references('serial_number')->on('machines')->onUpdate('cascade')->onDelete('cascade');
+                $table->string('sparePart_serial_number')->nullable();
+                $table->foreign("sparePart_serial_number")->references("serial_number")->on("spareParts")->onUpdate('cascade')->onDelete('set null');
                 $table->text('jobDescription'); 
                 $table->date('assignedDate'); 
                 $table->date('dueDate');
