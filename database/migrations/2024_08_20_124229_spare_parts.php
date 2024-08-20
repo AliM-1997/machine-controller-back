@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("serial_number")->unique();
             $table->integer("quantity")->require();
             $table->text("description")->nullable();
+            $table->string("image_path")->unique();
             $table->timestamps();
 
         });

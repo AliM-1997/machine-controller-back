@@ -21,7 +21,8 @@ return new class extends Migration
             $table->enum('role', ['admin', 'user'])->default('user');          
             $table->string('password');
             $table->string('confirmed_Password');
-            $table->string('location');
+            $table->string('location')->nullable();
+            $table->string('image_path')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

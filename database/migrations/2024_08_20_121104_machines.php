@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('serial_number')->unique();
             $table->enum('status',['active','under maintenance','attenction'])->default('active');
             $table->string('location')->nullable();
+            $table->string('image_path')->nullable();
             $table->text('description')->nullable();
             $table->integer('unit-per-hour');
             $table->timestamps();
