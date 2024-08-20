@@ -10,7 +10,7 @@ class MachineStatistic extends Model
     use HasFactory;
     
     protected $fillable = [
-        'machine_name',
+        'machine_id',
         'operational_hours',
         'MTTR',
         'MTTD',

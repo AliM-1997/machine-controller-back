@@ -10,8 +10,8 @@ class Task extends Model
     use HasFactory;
     protected $fillable=[
         "user_id",
-        "machine_name",
-        "sparePart_serial_number",
+        "machine_id",
+        "sparePart_id",
         "jobDescription",
         "assignedDate",
         "dueDate",
@@ -27,6 +27,6 @@ class Task extends Model
     }
     public function sparePart()
     {
-        return $this->belongsTo(SparePart::class);
+        return $this->belongsTo(Spare_Part::class);
     }
 }
