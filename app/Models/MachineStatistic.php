@@ -21,4 +21,8 @@ class MachineStatistic extends Model
         'availability',
         'date'
     ];
+    public function machine()
+    {
+       return $this->belongsTo(Machine::class);
+    }
 }
