@@ -25,4 +25,8 @@ class Task extends Model
     {
         return $this->belongsTo(Machine::class);
     }
+    public function sparePart()
+    {
+        return $this->belongsTo(SparePart::class);
+    }
 }
