@@ -21,7 +21,7 @@ class MachineFactory extends Factory
             'serial_number' => fake()->unique()->word(),
             'status' => fake()->randomElement(['active', 'under maintenance', 'attention']),
             'location' => fake()->optional()->word(),
-            'image_path' => fake()->optional()->imageUrl(),
+            'image_path' => 'path/to/image.jpg',
             'description' => fake()->optional()->text(),
             'unit-per-hour' => fake()->numberBetween(1, 100),
         ];
