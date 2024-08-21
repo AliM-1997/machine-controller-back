@@ -12,6 +12,6 @@ class machineInputSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        MachineInput::factory(50)->create();
     }
 }
