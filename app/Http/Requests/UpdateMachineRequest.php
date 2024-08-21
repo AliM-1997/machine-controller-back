@@ -23,7 +23,7 @@ class UpdateMachineRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|required|string|max:255',
-            'serial_number' =>'sometimes|required|string|max:255|unique',
+            'serial_number' =>'sometimes|required|string|max:255|unique:machines',
             'status' => 'sometimes|required|in:active,under maintenance,attention',
             'location' => 'nullable|string|max:255',
             'image_path' => 'nullable|string|max:255',

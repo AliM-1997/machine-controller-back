@@ -23,7 +23,7 @@ class StoreSparePartRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'serial_number'=>'required|string|max:255|unique',
+            'serial_number'=>'required|string|max:255|unique:spare_Parts',
             'quantity'=>'nullable|numeric|min:0|default:0',
             'description' => 'nullable|string|max:5000',
             'image_path' => 'nullable|string|max:255',

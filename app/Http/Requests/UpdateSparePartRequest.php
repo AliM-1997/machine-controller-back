@@ -23,7 +23,7 @@ class UpdateSparePartRequest extends FormRequest
     {
         return [
             'name' => 'somtimes|string|max:255',
-            'serial_number'=>'sometimes|string|max:255|unique',
+            'serial_number'=>'sometimes|string|max:255|unique:spare_parts',
             'quantity' => 'sometimes|nullable|numeric|min:0',
             'description' => 'sometimes|nullable|string|max:5000',
             'image_path' => 'sometimes|nullable|string|max:255',
