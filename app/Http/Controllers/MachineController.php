@@ -23,4 +23,5 @@ class MachineController extends Controller
         $machine->delete();
         return response()->json("null",204);
     }
+    
 }
