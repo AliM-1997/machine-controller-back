@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMachineRequest;
+use App\Http\Requests\UpdateMachineRequest;
 use App\Models\Machine;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,11 @@ class MachineController extends Controller
             "machineInput"=>$machine
         ],201);
     }
-    
-
+    public function update(UpdateMachineRequest $request,Machine $machine)
+    {
+        $machine->update($request->validated());
+        return response()->json([
+            "machine"=>$machine
+        ],200);
+    }
 }
