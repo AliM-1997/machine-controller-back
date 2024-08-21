@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMachineRequest;
 use App\Models\Machine;
 use Illuminate\Http\Request;
 
@@ -23,5 +24,13 @@ class MachineController extends Controller
         $machine->delete();
         return response()->json("null",204);
     }
-    
+    public function store(StoreMachineRequest $request)
+    {
+        $validate=$request->validated();
+        $machine=Machine::create($validate);
+        return response()->json([
+            "machineInput"=>$machine
+        ],201);
+    }
+
 }
