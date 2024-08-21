@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSparePartRequest;
 use App\Models\SparePart;
 use Illuminate\Http\Request;
 
@@ -25,5 +26,13 @@ class SparePartController extends Controller
     {
         $sparePart->delete();
         return response()->json(null,204);
+    }
+    public function store(StoreSparePartRequest $requset)
+    {
+        $validate=$requset->validated();
+        $sparePart=SparePart::create($validate);
+        return response()->json([
+            "sparePart"=>$sparePart
+        ],201);
     }
 }
