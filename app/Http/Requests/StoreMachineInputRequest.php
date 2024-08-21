@@ -11,7 +11,7 @@ class StoreMachineInputRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreMachineInputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'machine_id'=>'required|exists:machines,id|numeric',
+            'operating_time'=>'required|numeric|min:0',
+            'down_time'=>'required|numeric|min:0',
+            'number_of_failure'=>'required|numeric|min:0',
+            'actual_output'=>'required|numeric|min:0',
         ];
     }
 }
