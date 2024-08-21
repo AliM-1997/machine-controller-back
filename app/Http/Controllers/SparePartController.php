@@ -21,4 +21,9 @@ class SparePartController extends Controller
     {
         return response()->json(['spare_part' => $sparePart]);
     }
+    public function destroy(SparePart $sparePart)
+    {
+        $sparePart->delete();
+        return response()->json(null,204);
+    }
 }
