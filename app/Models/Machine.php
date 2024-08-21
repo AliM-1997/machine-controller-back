@@ -27,5 +27,9 @@ class Machine extends Model
     {
         return $this->hasMany(MachineStatistic::class);
     }
+    public function input()
+    {
+        return $this->hasMany(MachineInput::class);
+    }
 }
 
