@@ -45,8 +45,9 @@ class MachineInputController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(all $all)
+    public function destroy(MachineInput $machineInput)
     {
-        //
+        $machineInput->delete();
+        return response()->json("null",204);
     }
 }
