@@ -11,8 +11,8 @@ class MachineInput extends Model
     protected $fillable=[
         'machine_id',
         'operating_time',
-        'downtime',
-        'number_of_failures',
+        'down_time',
+        'number_of_failure',
         'actual_output'
     ];
     public function machine()
