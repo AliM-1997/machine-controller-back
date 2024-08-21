@@ -14,17 +14,16 @@ return new class extends Migration
         Schema::create('machine_Statistics', function(Blueprint $table){
             $table->id();
             $table->foreignId("machine_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
-            $table->decimal("operational_hours",10,2);
-            $table->decimal("MTTR",10,2);
-            $table->decimal("MTTD",10,2);
-            $table->decimal("MTBF",10,2);
-            $table->decimal("upTime",10,2);
-            $table->decimal("downTime",10,2);
-            $table->decimal("efficiency",10,2);
-            $table->decimal("availability",10,2);
+            $table->decimal("MTTR",10,2);               // down time / number of failure
+            $table->decimal("MTBF",10,2);               // total operating time /number of failure
+            // $table->decimal("MTTD",10,2);            // total detection time /number of failure
+            $table->decimal("availability",10,2);       // MTBF / MTBF +MTBR
+            $table->decimal("upTime",10,2);             // operating time * availability
+            $table->decimal("efficiency",10,2);         // actual output / theroretical output *100
             $table->date("date");
             $table->timestamps();
         });
+
     }
 
     /**

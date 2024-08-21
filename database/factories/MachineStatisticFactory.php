@@ -18,12 +18,10 @@ class MachineStatisticFactory extends Factory
     {
         return [
             'machine_id' =>Machine::factory(),
-            'operational_hours' => fake()->randomFloat(2, 0, 10000),
             'MTTR' => fake()->randomFloat(2, 0, 100),
-            'MTTD' => fake()->randomFloat(2, 0, 100),
+            // 'MTTD' => fake()->randomFloat(2, 0, 100),
             'MTBF' => fake()->randomFloat(2, 0, 10000),
             'upTime' => fake()->randomFloat(2, 0, 100),
-            'downTime' => fake()->randomFloat(2, 0, 100),
             'efficiency' => fake()->randomFloat(2, 0, 100),
             'availability' => fake()->randomFloat(2, 0, 100),
             'date' => fake()->date(),

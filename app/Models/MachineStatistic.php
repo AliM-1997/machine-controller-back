@@ -11,12 +11,10 @@ class MachineStatistic extends Model
     
     protected $fillable = [
         'machine_id',
-        'operational_hours',
         'MTTR',
-        'MTTD',
         'MTBF',
+        // 'MTTD',
         'upTime',
-        'downTime',
         'efficiency',
         'availability',
         'date'
