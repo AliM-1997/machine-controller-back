@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMachineInputRequest;
+use App\Http\Requests\UpdateMachineInputRequest;
 use Illuminate\Http\Request;
 use App\Models\MachineInput;
 
@@ -24,7 +25,7 @@ class MachineInputController extends Controller
      */
     public function store(StoreMachineInputRequest $request)
     {
-        $validate=$request->validate();
+        $validate=$request->validated();
         $machineInput=MachineInput::create($validate);
         return response()->json([
             "machineInput"=>$machineInput
@@ -42,9 +43,12 @@ class MachineInputController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateallRequest $request, all $all)
+    public function update(UpdateMachineInputRequest $request, MachineInput $machineInput)
     {
-        //
+        $machineInput->update($request->validated());
+        return response()->json([
+            "machineInput"=>$machineInput
+        ],200);
     }
 
     /**
