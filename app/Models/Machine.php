@@ -16,7 +16,7 @@ class Machine extends Model
         'location',
         'image_path',
         'description',
-        'last_maintenance'
+        'last_maintenance',
         'unit_per_hour'    
     ];
     public function task()
