@@ -18,4 +18,9 @@ class MachineController extends Controller
     {
         return response()->json(['machine_input' => $machine]);
     }
+    public function destroy(Machine $machine)
+    {
+        $machine->delete();
+        return response()->json("null",204);
+    }
 }
