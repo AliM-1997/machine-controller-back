@@ -11,7 +11,7 @@ class StoreMachineRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreMachineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'serial_number' => 'required|string|max:255|unique:machines',
+            'status' => 'required|in:active,under maintenance,attention',
+            'location' => 'nullable|string|max:255',
+            'image_path' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'last_maintenance' => 'required|date',
+            'unit_per_hour' => 'required|integer|min:0',
         ];
     }
 }
