@@ -32,5 +32,6 @@ class MachineController extends Controller
             "machineInput"=>$machine
         ],201);
     }
+    
 
 }
