@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MachineInputController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::prefix('v1')->group(function () {
     Route::apiResource('machineInput', MachineInputController::class);
+});
+
+Route::prefix('v1')->group(function(){
+    Route::apiResource('machine',MachineController::class);
 });
