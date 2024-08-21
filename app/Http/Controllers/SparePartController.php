@@ -17,4 +17,8 @@ class SparePartController extends Controller
             "machineInputs"=>$sparePart
         ]);
     }
+    public function show(SparePart $sparePart)
+    {
+        return response()->json(['spare_part' => $sparePart]);
+    }
 }
