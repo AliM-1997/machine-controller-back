@@ -23,6 +23,7 @@ class MachineFactory extends Factory
             'location' => fake()->word(),
             'image_path' => 'path/to/image.jpg',
             'description' => fake()->text(),
+            'last_maintenance'=>fake()->date(),
             'unit_per_hour' => fake()->numberBetween(1, 100), 
         ];
     }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('image_path')->nullable();
             $table->text('description')->nullable();
+            $table->date('last_maintenance');
             $table->integer('unit_per_hour')->default(0);
             $table->timestamps();
         });
