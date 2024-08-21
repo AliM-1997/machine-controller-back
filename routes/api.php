@@ -36,5 +36,5 @@ Route::prefix('v1')->group(function(){
 });
 
 Route::prefix('v1')->group(function(){
-Route::apiResource('sparePart',SparePartController::class);
+Route::apiResource('sparePart',SparePartController::class)->middleware('auth.user');
 });
