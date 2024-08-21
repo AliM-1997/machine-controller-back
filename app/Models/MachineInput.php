@@ -15,4 +15,8 @@ class MachineInput extends Model
         'number_of_failures',
         'actual_output'
     ];
+    public function machine()
+    {
+        return $this->belongsTo(Machine::class);
+    }
 }
