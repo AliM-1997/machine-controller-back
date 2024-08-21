@@ -35,9 +35,9 @@ class MachineInputController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MachineInput $machineInputs)
+    public function show(MachineInput $machineInput)
     {
-        return response()->json_decode(["MachineInput"=>$machineInputs]);
+        return response()->json(['machine_input' => $machineInput]);
     }
 
     /**
