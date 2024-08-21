@@ -14,4 +14,8 @@ class MachineController extends Controller
             "machineInputs"=>$machine
         ]);
     }
+    public function show(Machine $machine)
+    {
+        return response()->json(['machine_input' => $machine]);
+    }
 }
