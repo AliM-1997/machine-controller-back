@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\MachineInput;
+use App\Models\Machine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +18,10 @@ class MachineInputFactory extends Factory
     {
         return [
             'machine_id'=>Machine::factory(),
-            'operating_time'=>fake->randomfloat(2,0,1000),
-            'down_time'=>fake->randomfloat(2,0,1000),
-            'number_of_failure'=>fake->randomfloat(2,0,1000),
-            'actual_output'=>fake->randomfloat(2,0,1000),
+            'operating_time'=>fake()->randomfloat(2,0,1000),
+            'down_time'=>fake()->randomfloat(2,0,1000),
+            'number_of_failure'=>fake()->randomfloat(2,0,1000),
+            'actual_output'=>fake()->randomfloat(2,0,1000),
         ];
     }
 }

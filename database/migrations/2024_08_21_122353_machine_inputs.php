@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('machine_inputs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('machine_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->decimal('operation_time', 10, 2); 
-            $table->decimal('downtime', 10, 2); 
-            $table->decimal('number_of_failures', 10, 2);
+            $table->decimal('operating_time', 10, 2); 
+            $table->decimal('down_time', 10, 2); 
+            $table->decimal('number_of_failure', 10, 2);
             $table->decimal('actual_output', 10, 2);
             $table->timestamps();
         });

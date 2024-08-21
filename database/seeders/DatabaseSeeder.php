@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             SparepartSeeder::class,
             TaskSeeder::class,
             MachineStatisticSeeder::class,
-            MachineInput::class
+            machineInputSeeder::class
         ]);
     }
 }
