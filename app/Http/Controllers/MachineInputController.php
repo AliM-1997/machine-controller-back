@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MachineInput;
 
 class MachineInputController extends Controller
 {
@@ -22,15 +23,15 @@ class MachineInputController extends Controller
      */
     public function store(StoreallRequest $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(all $all)
+    public function show(MachineInput $machineInputs)
     {
-        //
+        return response()->json_decode(["MachineInput"=>$machineInputs]);
     }
 
     /**
