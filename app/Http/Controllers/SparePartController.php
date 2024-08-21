@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSparePartRequest;
+use App\Http\Requests\UpdateSparePartRequest;
 use App\Models\SparePart;
 use Illuminate\Http\Request;
 
@@ -34,5 +35,12 @@ class SparePartController extends Controller
         return response()->json([
             "sparePart"=>$sparePart
         ],201);
+    }
+    public function update(UpdateSparePartRequest $requset,SparePart $sparePart)
+    {
+        $sparePart->update($requset->validated());
+        return response()->json([
+            "spare_part"=>$sparePart
+        ],200);
     }
 }
