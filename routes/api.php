@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MachineInputController;
+use App\Http\Controllers\SparePartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,8 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('machine',MachineController::class);
+});
+
+Route::prefix('v1')->group(function(){
+Route::apiResource('sparePart',SparePartController::class);
 });
