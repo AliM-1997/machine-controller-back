@@ -18,11 +18,22 @@ class AdminMiddleware
     {
         $user = Auth::user();
 
-        // Check if the user has an 'admin' role
-        if ($user->role !== 'admin') {
-            return response()->json(['message' => 'Forbidden'], 403);
+        // Check if user is authenticated
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'details' => 'User not authenticated'
+            ], 401);
         }
 
+        // Check if the authenticated user has the 'admin' role
+        if ($user->role !== 'admin') {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'details' => 'User does not have the required role'
+            ], 403);
+        }
+        
         return $next($request);
     }
 }
