@@ -16,10 +16,11 @@ return new class extends Migration
                 $table->id(); 
                 $table->foreignId("user_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
                 $table->foreignId("machine_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
-                $table->foreignId("Spare_Part_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
+                $table->foreignId("Spare_Part_id")->nullable()->constrained()->onDelete("cascade")->onUpdate("cascade");
                 $table->text('jobDescription'); 
                 $table->date('assignedDate'); 
                 $table->date('dueDate');
+                $table->enum('status', ['Completed', 'Risked','Delayed','In Progress','Pending'])->default('Pending');               
                 $table->string("location");
                 $table->timestamps(); 
             });

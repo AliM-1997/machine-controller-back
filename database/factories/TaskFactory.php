@@ -22,10 +22,11 @@ class TaskFactory extends Factory
             'user_id' => User::factory(),
             'machine_id' => Machine::factory(),
             'Spare_Part_id' => SparePart::factory(),
-            'jobDescription' => $this->faker->sentence(),
-            'assignedDate' => $this->faker->date(),
-            'dueDate' => $this->faker->date(),
-            'location' => $this->faker->address(),
+            'jobDescription' => fake()->sentence(),
+            'assignedDate' =>fake()->date(),
+            'dueDate' => fake()->date(),
+            'location' => fake()->address(),
+            'status' => fake()->randomElement(['Completed', 'Risked', 'Delayed', 'In Progress', 'Pending']),
         ];
     }
 }

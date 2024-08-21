@@ -15,7 +15,8 @@ class Task extends Model
         "jobDescription",
         "assignedDate",
         "dueDate",
-        "location"
+        "location",
+        "status"
     ];
     public function user()
     {
