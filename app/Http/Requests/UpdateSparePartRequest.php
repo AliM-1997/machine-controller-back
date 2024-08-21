@@ -11,7 +11,7 @@ class UpdateSparePartRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateSparePartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'somtimes|string|max:255',
+            'serial_number'=>'sometimes|string|max:255|unique',
+            'quantity' => 'sometimes|nullable|numeric|min:0',
+            'description' => 'sometimes|nullable|string|max:5000',
+            'image_path' => 'sometimes|nullable|string|max:255',
         ];
     }
 }
