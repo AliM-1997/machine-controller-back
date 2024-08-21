@@ -11,7 +11,10 @@ class MachineInputController extends Controller
      */
     public function index()
     {
-        //
+        $machineInputs=MachineInput::all();
+        return response()->json([
+            "machineInputs"=>$machineInputs
+        ]);
     }
 
     /**
