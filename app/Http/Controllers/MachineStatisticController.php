@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMachineStatisticRequest;
 use App\Models\MachineStatistic;
 use Illuminate\Http\Request;
 
@@ -21,10 +22,16 @@ class MachineStatisticController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMachineStatisticRequest $request)
     {
-        //
-    }
+        $validation=$request->validated();
+
+        $validation=MachineStatistic::create($validation);
+        return response()->json([
+            'machine statistics'=>$validation
+        ],201);
+     }
+    
 
     /**
      * Display the specified resource.
