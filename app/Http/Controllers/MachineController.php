@@ -76,5 +76,11 @@ class MachineController extends Controller
             'image_url' => Storage::url($imagePath),
         ], 200);
     }
+    public function getMachineImage($machine)
+    {
+        $machine = Machine::findOrFail($machine);
+        $imageUrl = $machine->image_path;
+        return response()->json(['image_url' => $imageUrl]);
+    }
 
 }
