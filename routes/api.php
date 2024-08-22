@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::prefix('v1')->group(function () {
     Route::apiResource('machineInput', MachineInputController::class);
+    Route::post('machine/image/{machineId}', [MachineController::class, 'updateImage']);
 });
 
 Route::prefix('v1')->group(function(){
@@ -36,5 +37,5 @@ Route::prefix('v1')->group(function(){
 });
 
 Route::prefix('v1')->group(function(){
-Route::apiResource('sparePart',SparePartController::class)->middleware('auth.admin');
+    Route::apiResource('sparePart',SparePartController::class)->middleware('auth.admin');
 });
