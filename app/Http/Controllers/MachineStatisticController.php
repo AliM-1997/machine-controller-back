@@ -45,8 +45,9 @@ class MachineStatisticController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(MachineStatistic $machineStatistic)
     {
-        //
+        $machineStatistic->delete();
+        return response()->json([null,204]);
     }
 }
