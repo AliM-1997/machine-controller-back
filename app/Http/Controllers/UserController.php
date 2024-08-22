@@ -97,4 +97,10 @@ class UserController extends Controller
             'image_url' => Storage::url($imagePath),
         ], 200);
     }
+    public function getUserImage($userId)
+    {
+        $user = User::findOrFail($userId);
+        $imageUrl = $user->image_path;
+        return response()->json(['image_url' => $imageUrl]);
+    }
 }
