@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateMachineRequest;
 use App\Models\Machine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class MachineController extends Controller
 {
@@ -41,35 +42,39 @@ class MachineController extends Controller
             "machine"=>$machine
         ],200);
     }
-    public function updateImage(Request $request, $machineId)
-{
-    // Validate the image file
-    $request->validate([
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    public function updateMachineImage(Request $request, $machineId)
+    {
+        // Validate the image file
+        $valifdator=Validator::make($request->all(),[
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        if($valifdator->fails()){
+            return response()->json([
+                'error'=>$valifdator->errors()
+            ]);
+        }
+        // Find the machine by ID
+        $machine = Machine::findOrFail($machineId);
 
-    // Find the machine by ID
-    $machine = Machine::findOrFail($machineId);
+        // Delete the old image if it exists
+        if ($machine->image_path) {
+            Storage::disk('public')->delete($machine->image_path);
+        }
 
-    // Delete the old image if it exists
-    if ($machine->image_path) {
-        Storage::disk('public')->delete($machine->image_path);
+        // Handle the new image upload
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $imagePath = $image->storeAs('machine_images', $imageName, 'public');
+
+        // Update the image path in the database
+        $machine->image_path = $imagePath;
+        $machine->save();
+
+        return response()->json([
+            'message' => 'Image updated successfully',
+            'image_path' => $imagePath,
+            'image_url' => Storage::url($imagePath),
+        ], 200);
     }
-
-    // Handle the new image upload
-    $image = $request->file('image');
-    $imageName = time() . '.' . $image->getClientOriginalExtension();
-    $imagePath = $image->storeAs('machine_images', $imageName, 'public');
-
-    // Update the image path in the database
-    $machine->image_path = $imagePath;
-    $machine->save();
-
-    return response()->json([
-        'message' => 'Image updated successfully',
-        'image_path' => $imagePath,
-        'image_url' => Storage::url($imagePath),
-    ], 200);
-}
 
 }
