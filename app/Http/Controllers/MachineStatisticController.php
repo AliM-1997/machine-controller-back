@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMachineStatisticRequest;
+use App\Http\Requests\UpdateMachineStatisticRequest;
 use App\Models\MachineStatistic;
 use Illuminate\Http\Request;
 
@@ -44,9 +45,12 @@ class MachineStatisticController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateMachineStatisticRequest $request, MachineStatistic $machineStatistic)
     {
-        //
+        $machineStatistic->update($request->validated());
+        return response()->json([
+            'machine statistic'=>$machineStatistic
+        ],201);
     }
 
     /**
