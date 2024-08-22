@@ -11,7 +11,7 @@ class getStaticByDateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class getStaticByDateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'date'=>'nullable|date',
+            "startDate"=>'nullable|date',
+            "endDate"=>'nullable|after_or_equal:startDate'
+        ];
+    }
+        /**
+     * Customize the error messages.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'end_date.after_or_equal' => 'The end date must be a date after or equal to the start date.',
         ];
     }
 }
