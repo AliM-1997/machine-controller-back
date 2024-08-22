@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MachineStatistic;
 use Illuminate\Http\Request;
 
 class MachineStatisticController extends Controller
@@ -11,7 +12,10 @@ class MachineStatisticController extends Controller
      */
     public function index()
     {
-        //
+        $statistic=MachineStatistic::all();
+        return response()->json([
+            "statistic"=>$statistic
+        ]);
     }
 
     /**
