@@ -56,5 +56,6 @@ Route::prefix('v1')->group(function(){
 });
 
 Route::prefix("v1")->group(function(){
-Route::apiResource('machineStatistic',MachineStatisticController::class);
+    Route::apiResource('machineStatistic',MachineStatisticController::class);
+    Route::get('machineStatistic/machineId/{machineId}',[MachineStatisticController::class,'getStatisticBymachineId']);
 });
