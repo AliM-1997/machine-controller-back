@@ -76,11 +76,21 @@ class MachineController extends Controller
             'image_url' => Storage::url($imagePath),
         ], 200);
     }
-    public function getMachineImage($machine)
+    public function getMachineImage($machineId)
     {
-        $machine = Machine::findOrFail($machine);
+        $machine = Machine::findOrFail($machineId);
         $imageUrl = $machine->image_path;
         return response()->json(['image_url' => $imageUrl]);
     }
-
+    public function deleteMachineImage($machineId)
+    {
+        $machine = Machine::findOrFail($machineId);
+        if ($machine->image_path) {{
+                Storage::disk('public')->delete($machine->image_path);
+            }
+            $machine->image_path = null;
+            $machine->save();
+        }
+        return response()->json(['message' => 'Image deleted successfully.']);
+    }
 }
