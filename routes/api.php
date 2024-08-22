@@ -36,6 +36,7 @@ Route::prefix('v1')->group(function () {
 Route::prefix('v1')->group(function(){
     Route::apiResource('machine',MachineController::class);
     Route::post('machine/uploadImage/{machineId}', [MachineController::class, 'updateMachineImage']);
+    Route::get('machine/getImage/{machineId}', [MachineController::class, 'getMachineImage']);
 });
 
 Route::prefix('v1')->group(function(){
