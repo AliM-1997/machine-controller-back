@@ -30,11 +30,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::prefix('v1')->group(function () {
     Route::apiResource('machineInput', MachineInputController::class);
-    Route::post('machine/image/{machineId}', [MachineController::class, 'updateImage']);
 });
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('machine',MachineController::class);
+    Route::post('machine/image/{machineId}', [MachineController::class, 'updateMachineImage']);
 });
 
 Route::prefix('v1')->group(function(){
@@ -43,4 +43,5 @@ Route::prefix('v1')->group(function(){
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('user',UserController::class);
+    Route::post('user/image/{userid}',[UserController::class,'updateUserImage']);
 });
