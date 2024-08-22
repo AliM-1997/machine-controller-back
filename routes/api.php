@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MachineInputController;
 use App\Http\Controllers\SparePartController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,8 @@ Route::prefix('v1')->group(function(){
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('sparePart',SparePartController::class)->middleware('auth.admin');
+});
+
+Route::prefix('v1')->group(function(){
+    Route::apiResource('user',UserController::class);
 });
