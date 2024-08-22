@@ -81,8 +81,21 @@ class SparePartController extends Controller
     }
     public function getSparePartImage($sparePartId)
     {
-        $user = SparePart::findOrFail($sparePartId);
-        $imageUrl = $user->image_path;
+        $sparePart = SparePart::findOrFail($sparePartId);
+        $imageUrl = $sparePart->image_path;
         return response()->json(['image_url' => $imageUrl]);
+    }
+    public function deleteSparePartImage($sparePart)
+    {
+        $sparePart = SparePart::findOrFail($sparePart);
+
+        if ($sparePart->image_path) {{
+                Storage::disk('public')->delete($sparePart->image_path);
+            }
+            $sparePart->image_path = null;
+            $sparePart->save();
+        }
+
+        return response()->json(['message' => 'Image deleted successfully.']);
     }
 }
