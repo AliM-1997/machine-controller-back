@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\getStaticByDateRequest;
 use App\Http\Requests\StoreMachineStatisticRequest;
 use App\Http\Requests\UpdateMachineStatisticRequest;
 use App\Models\Machine;
@@ -74,5 +75,25 @@ class MachineStatisticController extends Controller
             'machine' => $machine->name,
             'statistics' => $machine->statistic
         ]);
+    }
+    public function getStatisticByDate(getStaticByDateRequest $request)
+    {
+        $validated = $request->validated();
+        $query = MachineStatistic::query();
+
+        if (isset($validated['date']))
+            {
+                $query->whereDate('date', $validated['date']);
+            } 
+        elseif (isset($validated['startDate']) && isset($validated['endDate'])) 
+            {
+                $startDate = $validated['startDate'];
+                $endDate = $validated['endDate'];
+                $query->whereBetween('date', [$startDate, $endDate]);
+            }
+        $statistics = $query->get();
+        return response()->json([
+            'statistics' => $statistics
+            ]);
     }
 }
