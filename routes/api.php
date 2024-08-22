@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MachineInputController;
+use App\Http\Controllers\MachineStatisticController;
 use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -52,4 +53,8 @@ Route::prefix('v1')->group(function(){
     Route::post('user/updateImage/{userid}',[UserController::class,'updateUserImage']);
     Route::get('user/getImage/{userid}',[UserController::class,"getUserImage"]);
     Route::delete('user/deleteImage/{userid}',[UserController::class,'deleteUserImage']);
+});
+
+Route::prefix("v1")->group(function(){
+Route::apiResource('machineStatistic',MachineStatisticController::class);
 });
