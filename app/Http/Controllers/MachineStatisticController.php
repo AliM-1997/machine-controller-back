@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMachineStatisticRequest;
 use App\Http\Requests\UpdateMachineStatisticRequest;
+use App\Models\Machine;
 use App\Models\MachineStatistic;
 use Illuminate\Http\Request;
 
@@ -60,5 +61,18 @@ class MachineStatisticController extends Controller
     {
         $machineStatistic->delete();
         return response()->json([null,204]);
+    }
+    public function getStatisticByMachineId($machineId)
+    {
+        $machine = Machine::with('statistic')->find($machineId);
+        if (!$machine) {
+            return response()->json([
+                'error' => 'Machine not found'
+            ], 404);
+        }
+            return response()->json([
+            'machine' => $machine->name,
+            'statistics' => $machine->statistic
+        ]);
     }
 }
