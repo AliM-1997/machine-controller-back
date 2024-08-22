@@ -7,6 +7,7 @@ use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Monolog\Handler\RotatingFileHandler;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +35,12 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('machine',MachineController::class);
-    Route::post('machine/image/{machineId}', [MachineController::class, 'updateMachineImage']);
+    Route::post('machine/uploadImage/{machineId}', [MachineController::class, 'updateMachineImage']);
 });
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('sparePart',SparePartController::class)->middleware('auth.admin');
+    Route::post('sparePart/uploadImage/{sparePartId}',[SparePartController::class,'updateSparePartImage']);
 });
 
 Route::prefix('v1')->group(function(){
