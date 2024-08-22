@@ -23,11 +23,11 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'username' => 'nullable|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'username' => 'nullable|string|max:255|unique:users',
             'phone_number' => 'nullable|string|max:20|unique:users',
             'role' => 'nullable|in:admin,user',
-            'password' => 'required|string|min:8|confirmed', 
             'location' => 'nullable|string|max:255',
         ];
     }

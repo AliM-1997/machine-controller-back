@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -25,11 +26,12 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $validation=$request->validated();
-        $user=User::creae($validation);
+        $validation = $request->validated();
+        $validation['password'] = Hash::make($validation['password']);
+        $user = User::create($validation);
         return response()->json([
-            "user"=>$user
-        ],201);
+            'user' => $user
+        ], 201);
     }
 
     /**
