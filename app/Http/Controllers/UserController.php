@@ -79,14 +79,12 @@ class UserController extends Controller
     
         // Delete the old image if it exists
         if ($user->image_path) {
-            if (Storage::disk('public')->exists($user->image_path)) {
                 Storage::disk('public')->delete($user->image_path);
-            }
         }
     
         // Handle the new image upload
         $image = $request->file('image');
-        $imageName = uniqid() . '_' . time() . '.' . $image->getClientOriginalExtension();
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
         $imagePath = $image->storeAs('user_image', $imageName, 'public');
     
         // Update the image path in the database
