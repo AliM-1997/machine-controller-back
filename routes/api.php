@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function(){
 Route::prefix('v1')->group(function(){
     Route::apiResource('sparePart',SparePartController::class)->middleware('auth.admin');
     Route::post('sparePart/uploadImage/{sparePartId}',[SparePartController::class,'updateSparePartImage']);
+    Route::get('sparePart/getImage/{sparePartId}',[SparePartController::class,'getSparePartImage']);
 });
 
 Route::prefix('v1')->group(function(){
