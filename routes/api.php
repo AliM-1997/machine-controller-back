@@ -45,7 +45,7 @@ Route::prefix('v1')->group(function(){
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('user',UserController::class);
-    Route::post('user/image/{userid}',[UserController::class,'updateUserImage']);
-    Route::get('getUserImage/{userid}',[UserController::class,"getUserImage"]);
-    Route::delete('deleteUserImage/{userid}',[UserController::class,'deleteUserImage']);
+    Route::post('user/updateImage/{userid}',[UserController::class,'updateUserImage']);
+    Route::get('user/getImage/{userid}',[UserController::class,"getUserImage"]);
+    Route::delete('user/deleteImage/{userid}',[UserController::class,'deleteUserImage']);
 });

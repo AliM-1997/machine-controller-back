@@ -79,4 +79,10 @@ class SparePartController extends Controller
             'image_url' => Storage::url($imagePath),
         ], 200);
     }
+    public function getSparePartImage($sparePartId)
+    {
+        $user = SparePart::findOrFail($sparePartId);
+        $imageUrl = $user->image_path;
+        return response()->json(['image_url' => $imageUrl]);
+    }
 }
