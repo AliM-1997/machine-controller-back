@@ -103,4 +103,17 @@ class UserController extends Controller
         $imageUrl = $user->image_path;
         return response()->json(['image_url' => $imageUrl]);
     }
+    public function deleteUserImage($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        if ($user->image_path) {{
+                Storage::disk('public')->delete($user->image_path);
+            }
+            $user->image_path = null;
+            $user->save();
+        }
+
+        return response()->json(['message' => 'Image deleted successfully.']);
+    }
 }
