@@ -76,6 +76,28 @@ class MachineStatisticController extends Controller
             'statistics' => $machine->statistic
         ]);
     }
+    public function getStatisticsForMachinesComparison(Request $request)
+{
+    $validated = $request->validate([
+        'machine_id_1' => 'required|exists:machines,id',
+        'machine_id_2' => 'required|exists:machines,id'
+    ]);
+
+    $machine1 = Machine::with('statistic')->find($validated['machine_id_1']);
+    $machine2 = Machine::with('statistic')->find($validated['machine_id_2']);
+
+    return response()->json([
+        'machine_1' => $machine1 ? [
+            'name' => $machine1->name,
+            'statistics' => $machine1->statistic
+        ] : null,
+        'machine_2' => $machine2 ? [
+            'name' => $machine2->name,
+            'statistics' => $machine2->statistic
+        ] : null
+    ]);
+}
+
     public function getStatisticByDate(getStaticByDateRequest $request)
     {
         $validated = $request->validated();
