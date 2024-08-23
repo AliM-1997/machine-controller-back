@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
+use App\Notifications\TaskNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -27,6 +29,10 @@ class TaskController extends Controller
     {
         $validation=$request->validated();
         $task=Task::create($validation);
+        $user = $task->user;
+        if ($user) {
+            Notification::send($user, new TaskNotification($task));
+    }
         return response()->json([
             'task'=>$task
         ],201);
@@ -46,6 +52,10 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $task->update($request->validated());
+            $user = $task->user;
+            if ($user) {
+                Notification::send($user, new TaskNotification($task));
+            }
         return response()->json([
             'task'=>$task
         ],200);      
