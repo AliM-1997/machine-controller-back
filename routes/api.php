@@ -59,4 +59,5 @@ Route::prefix("v1")->group(function(){
     Route::apiResource('machineStatistic',MachineStatisticController::class);
     Route::get('machineStatistic/machineId/{machineId}',[MachineStatisticController::class,'getStatisticBymachineId']);
     Route::get('machineStatistics/byDate', [MachineStatisticController::class, 'getStatisticByDate']);
+    Route::get('machineStatistics/comparison', [MachineStatisticController::class, 'getStatisticsForMachinesComparison']);
 });
