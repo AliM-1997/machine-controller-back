@@ -7,6 +7,7 @@ use App\Http\Controllers\MachineStatisticController;
 use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Monolog\Handler\RotatingFileHandler;
@@ -22,10 +23,10 @@ use Monolog\Handler\RotatingFileHandler;
 |
 */
 Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
+    Route::post('v1/login', 'login');
+    Route::post('v1/register', 'register');
+    Route::post('v1/logout', 'logout');
+    Route::post('v1/refresh', 'refresh');
 
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
