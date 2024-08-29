@@ -62,6 +62,8 @@ Route::prefix("v1")->group(function(){
     Route::get('machineStatistic/machineId/{machineId}',[MachineStatisticController::class,'getStatisticBymachineId']);
     Route::get('machineStatistics/byDate', [MachineStatisticController::class, 'getStatisticByDate']);
     Route::get('machineStatistics/comparison', [MachineStatisticController::class, 'getStatisticsForMachinesComparison']);
+    Route::get('machineStatistics/{machineName}', [MachineStatisticController::class, 'getStatisticByName']);
+
 });
 
 Route::prefix('v1')->group(function(){
