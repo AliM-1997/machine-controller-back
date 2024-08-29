@@ -7,10 +7,18 @@ use App\Http\Requests\StoreMachineStatisticRequest;
 use App\Http\Requests\UpdateMachineStatisticRequest;
 use App\Models\Machine;
 use App\Models\MachineStatistic;
+use App\Services\MachineStatisticService;
+use Database\Seeders\machineInputSeeder;
 use Illuminate\Http\Request;
 
 class MachineStatisticController extends Controller
 {
+    private $machineStatisticService;
+
+    public function __construct(MachineStatisticService $machineStatisticService )
+    {
+        $this->machineStatisticService=$machineStatisticService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,12 +35,15 @@ class MachineStatisticController extends Controller
      */
     public function store(StoreMachineStatisticRequest $request)
     {
-        $validation=$request->validated();
+        // $validation=$request->validated();
 
-        $validation=MachineStatistic::create($validation);
-        return response()->json([
-            'machine statistics'=>$validation
-        ],201);
+        // $validation=MachineStatistic::create($validation);
+
+
+        // return response()->json([
+        //     'machine statistics'=>$validation
+        // ],201);
+        $this->machineStatisticService->calculateStatistics();
      }
     
 
@@ -118,4 +129,14 @@ class MachineStatisticController extends Controller
             'statistics' => $statistics
             ]);
     }
+    public function getStatisticByName($name)
+{
+    $machine = Machine::where('name', $name)->first();
+    if (!$machine) {
+        return response()->json(['error' => 'Machine not found'], 404);
+    }
+    $statistics = MachineStatistic::where('machine_id', $machine->id)->get();
+    return response()->json(['machine' => $machine, 'statistics' => $statistics]);
+}
+
 }
