@@ -35,15 +35,15 @@ class MachineStatisticController extends Controller
      */
     public function store(StoreMachineStatisticRequest $request)
     {
-        // $validation=$request->validated();
+        $validation=$request->validated();
 
-        // $validation=MachineStatistic::create($validation);
+        $validation=MachineStatistic::create($validation);
 
 
-        // return response()->json([
-        //     'machine statistics'=>$validation
-        // ],201);
-        $this->machineStatisticService->calculateStatistics();
+        return response()->json([
+            'machine statistics'=>$validation
+        ],201);
+        // $this->machineStatisticService->calculateStatistics();
      }
     
 
