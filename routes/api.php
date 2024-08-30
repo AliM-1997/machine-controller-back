@@ -43,6 +43,7 @@ Route::prefix('v1')->group(function(){
     Route::post('machine/uploadImage/{machineId}', [MachineController::class, 'updateMachineImage']);
     Route::get('machine/getImage/{machineId}', [MachineController::class, 'getMachineImage']);
     Route::delete('machine/deleteImage/{machineId}', [MachineController::class, 'deleteMachineImage']);
+    
 });
 
 Route::prefix('v1')->group(function(){
@@ -66,7 +67,7 @@ Route::prefix("v1")->group(function(){
     Route::get('machineStatistics/comparison', [MachineStatisticController::class, 'getStatisticsForMachinesComparison']);
     Route::get('machineStatistics/{machineName}', [MachineStatisticController::class, 'getStatisticByName']);
     Route::get('machineStatistics/byName/byDate', [MachineStatisticController::class, 'getStatisticByDateAndMachine']);
-
+    
 });
 
 Route::prefix('v1')->group(function(){
@@ -76,3 +77,7 @@ Route::prefix('v1')->group(function(){
 Route::prefix('v1')->group(function(){
     Route::get("taskNotification",[NotficationController::class,"getAllNotifications"]);
 });
+
+
+
+Route::get('machine/serialnumber', [MachineController::class, 'getSerialNumbers']);
