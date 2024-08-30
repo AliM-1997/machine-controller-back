@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMachineRequest;
 use App\Http\Requests\UpdateMachineRequest;
 use App\Models\Machine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -92,5 +93,15 @@ class MachineController extends Controller
             $machine->save();
         }
         return response()->json(['message' => 'Image deleted successfully.']);
+    }
+    public function GetByMachineName($name)
+    {
+        $machine = Machine::where('name', $name)->first();
+            if (!$machine) {
+            return response()->json(['error' => 'Machine not found'], 404);
+        }
+        return response()->json([
+            "machine" => $machine
+        ], 200);
     }
 }
