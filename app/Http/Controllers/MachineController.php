@@ -6,12 +6,21 @@ use App\Http\Requests\StoreMachineRequest;
 use App\Http\Requests\UpdateMachineRequest;
 use App\Models\Machine;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class MachineController extends Controller
 {
+    public function getSerialNumbers()
+    {
+        $serialNumbers = Machine::pluck("serial_number");
+        $formattedSerialNumbers = $serialNumbers->map(function ($serialNumber) {
+            return ['label' => $serialNumber];
+        });
+        
+        // Return the formatted serial numbers as a JSON response
+        return response()->json($formattedSerialNumbers);
+    }
     public function index()
     {
         $machine=Machine::all();
@@ -104,4 +113,5 @@ class MachineController extends Controller
             "machine" => $machine
         ], 200);
     }
+
 }
