@@ -139,4 +139,31 @@ class MachineStatisticController extends Controller
     return response()->json(['machine' => $machine, 'statistics' => $statistics]);
 }
 
+
+public function getStatisticByDateAndMachine(Request $request)
+{
+    $machineName = $request->query('machine_name');
+    $date = $request->query('date');
+    if(!$date||!$machineName){
+        return response()->json([
+            "message"=>"both machine and date required"
+        ]);
+    }
+    $machine = Machine::where('name', $machineName)->first();
+    if (!$machine) {
+        return response()->json(['error' => 'Machine not found'], 404);
+    }
+    $statistics = MachineStatistic::where('machine_id', $machine->id)
+                                  ->where('date', $date)
+                                  ->get();
+                                  if ($statistics->isEmpty()) {
+                                    return response()->json([
+                                        'message' => 'No statistics found for the given date.'
+                                    ], 404);
+                                }
+    return response()->json([
+        'machine' => $machine,
+        'statistics' => $statistics
+    ]);
+}
 }
