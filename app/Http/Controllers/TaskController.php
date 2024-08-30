@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
+use App\Models\User;
 use App\Notifications\TaskNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
@@ -29,7 +30,7 @@ class TaskController extends Controller
     {
         $validation=$request->validated();
         $task=Task::create($validation);
-        $user = $task->user;
+        $user = User ::all();
         if ($user) {
             Notification::send($user, new TaskNotification($task));
     }

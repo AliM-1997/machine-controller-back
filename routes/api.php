@@ -7,6 +7,7 @@ use App\Http\Controllers\MachineStatisticController;
 use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NotficationController;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -69,4 +70,8 @@ Route::prefix("v1")->group(function(){
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('task',TaskController::class);
+});
+
+Route::prefix('v1')->group(function(){
+    Route::get("taskNotification",[NotficationController::class,"getAllNotifications"]);
 });
