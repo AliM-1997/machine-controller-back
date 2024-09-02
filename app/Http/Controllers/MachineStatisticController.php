@@ -130,15 +130,24 @@ class MachineStatisticController extends Controller
             ]);
     }
     public function getStatisticByName($name)
-{
-    $machine = Machine::where('name', $name)->first();
-    if (!$machine) {
-        return response()->json(['error' => 'Machine not found'], 404);
-    }
-    $statistics = MachineStatistic::where('machine_id', $machine->id)->get();
-    return response()->json(['machine' => $machine, 'statistics' => $statistics]);
-}
+    {
+        $machine = Machine::where('name', $name)->first();
 
+        if (!$machine) {
+            return response()->json(['error' => 'Machine not found'], 404);
+        }
+    
+        $statistics = MachineStatistic::find($machine->id);
+        
+        if (!$statistics) {
+            return response()->json(['message' => 'No statistics found for this machine.'], 404);
+        }
+    
+        return response()->json([
+            'machine' => $machine,
+            'statistics' => $statistics
+        ]);
+    }
 
 public function getStatisticByDateAndMachine(Request $request)
 {
