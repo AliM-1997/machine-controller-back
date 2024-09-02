@@ -8,6 +8,7 @@ use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotficationController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ use Monolog\Handler\RotatingFileHandler;
 Route::controller(AuthController::class)->group(function () {
     Route::post('v1/login', 'login');
     Route::post('v1/register', 'register');
-    Route::post('v1/logout', 'logout');
+    Route::post('v1/logout', 'logout');     
     Route::post('v1/refresh', 'refresh');
 
 });
@@ -40,6 +41,8 @@ Route::prefix('v1')->group(function () {
 Route::prefix('v1')->group(function(){
     Route::apiResource('machine',MachineController::class);
     Route::get('machine/name/{name}', [MachineController::class, 'GetByMachineName']);
+    Route::get('machine/serial/number', [MachineController::class, 'getSerialNumbers']);
+    Route::get('machine/all/name', [MachineController::class, 'getAllName']);
     Route::post('machine/uploadImage/{machineId}', [MachineController::class, 'updateMachineImage']);
     Route::get('machine/getImage/{machineId}', [MachineController::class, 'getMachineImage']);
     Route::delete('machine/deleteImage/{machineId}', [MachineController::class, 'deleteMachineImage']);
@@ -74,10 +77,9 @@ Route::prefix('v1')->group(function(){
     Route::apiResource('task',TaskController::class);
 });
 
-Route::prefix('v1')->group(function(){
-    Route::get("taskNotification",[NotficationController::class,"getAllNotifications"]);
+Route::middleware('auth')->group(function () {
+    Route::get('notifications', [NotificationController::class, 'getAllNotifications']);
+    Route::post('notifications/{notificationId}/read', [NotificationController::class, 'markNotificationAsRead']);
+    Route::post('notifications/{id}/mark-as-read', [NotificationController::class, 'getUnreadNotifications']);
 });
 
-
-
-Route::get('machine/serialnumber', [MachineController::class, 'getSerialNumbers']);

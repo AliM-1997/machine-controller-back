@@ -40,6 +40,7 @@ class TaskNotification extends Notification
     {
         return [
             'task_id' => $this->task->id,
+            'user_id'=>$this->task->user_id,
             'jobDescription' => $this->task->jobDescription,
             'assignedDate' => $this->task->assignedDate,
             'dueDate' => $this->task->dueDate,
