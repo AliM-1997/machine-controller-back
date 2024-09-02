@@ -54,8 +54,11 @@ class TaskController extends Controller
     {
         $task->update($request->validated());
             $user = $task->user;
+            // if ($user) {
+            //     Notification::send($user, new TaskNotification($task));
+            // }
             if ($user) {
-                Notification::send($user, new TaskNotification($task));
+                $user->notify(new TaskNotification($task));
             }
         return response()->json([
             'task'=>$task
