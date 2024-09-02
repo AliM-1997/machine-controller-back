@@ -17,12 +17,18 @@ class MachineController extends Controller
         $formattedSerialNumbers = $serialNumbers->map(function ($serialNumber) {
             return ['label' => $serialNumber];
         });
-        
-        // Return the formatted serial numbers as a JSON response
-        return response()->json($formattedSerialNumbers);
+                return response()->json($formattedSerialNumbers);
+    }
+    public function getAllName()
+    {
+        $name = Machine::pluck("name");
+        $formattedname= $name->map(function ($name) {
+            return ['label' => $name];
+        });
+                return response()->json($formattedname);
     }
     public function index()
-    {
+    {   
         $machine=Machine::all();
         return response()->json([
             "machineInputs"=>$machine
