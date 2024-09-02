@@ -25,7 +25,7 @@ use Monolog\Handler\RotatingFileHandler;
 |
 */
 Route::controller(AuthController::class)->group(function () {
-    Route::post('v1/login', 'login');
+    Route::post('v1/login', 'login')->name('login');
     Route::post('v1/register', 'register');
     Route::post('v1/logout', 'logout');     
     Route::post('v1/refresh', 'refresh');
@@ -78,9 +78,8 @@ Route::prefix('v1')->group(function(){
     Route::apiResource('task',TaskController::class);
 });
 
-Route::middleware('auth')->group(function () {
+Route::prefix('v1')->middleware('auth')->group(function () {
     Route::get('notifications', [NotificationController::class, 'getAllNotifications']);
-    Route::post('notifications/{notificationId}/read', [NotificationController::class, 'markNotificationAsRead']);
-    Route::post('notifications/{id}/mark-as-read', [NotificationController::class, 'getUnreadNotifications']);
+    Route::patch('notifications/{notificationId}/read', [NotificationController::class, 'markNotificationAsRead']);
+    Route::get('notifications/unread', [NotificationController::class, 'getUnreadNotifications']);
 });
-
