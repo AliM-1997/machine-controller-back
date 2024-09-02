@@ -28,15 +28,18 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        $validation=$request->validated();
-        $task=Task::create($validation);
-        $user = User ::all();
+        $validatedData = $request->validated();
+        $task = Task::create($validatedData);
+        $user = User::find($task->user_id);
+    
         if ($user) {
             Notification::send($user, new TaskNotification($task));
-    }
+        }
         return response()->json([
-            'task'=>$task
-        ],201);
+            'success' => true,
+            'message' => 'Task created successfully and user notified',
+            'task' => $task
+        ], 201);
     }
 
     /**
