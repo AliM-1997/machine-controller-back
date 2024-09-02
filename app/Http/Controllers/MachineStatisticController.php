@@ -132,14 +132,14 @@ class MachineStatisticController extends Controller
     public function getStatisticByName($name)
     {
         $machine = Machine::where('name', $name)->first();
-
+    
         if (!$machine) {
             return response()->json(['error' => 'Machine not found'], 404);
         }
     
-        $statistics = MachineStatistic::find($machine->id);
-        
-        if (!$statistics) {
+        $statistics = MachineStatistic::where('machine_id', $machine->id)->get();
+    
+        if ($statistics->isEmpty()) {
             return response()->json(['message' => 'No statistics found for this machine.'], 404);
         }
     
@@ -174,5 +174,30 @@ public function getStatisticByDateAndMachine(Request $request)
         'machine' => $machine,
         'statistics' => $statistics
     ]);
+}
+public function getStatisticByNameAndBetweenDate(Request $request){
+    $machineName = $request->query('machine_name');
+    $startDate = $request->query('startDate');
+    $endDate = $request->query('endDate');
+    if(!$machineName||!$startDate||!$endDate){
+        return response()->json([
+            "message"=>"both machine and dates required"
+        ]);
+    }
+    $machine = Machine::where('name', $machineName)->first();
+    if (!$machine) {
+        return response()->json(['error' => 'Machine not found'], 404);
+    }
+    $statistic=MachineStatistic::where("machine_id",$machine->id)->whereBetween("date",[$startDate,$endDate])->get();
+    if ($statistic->isEmpty()) {
+        return response()->json([
+            'message' => 'No statistics found for the given date.'
+        ], 404);
+    }
+return response()->json([
+'machine' => $machine,
+'statistics' => $statistic
+]);
+
 }
 }
