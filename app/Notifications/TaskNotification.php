@@ -41,6 +41,7 @@ class TaskNotification extends Notification
         return [
             'task_id' => $this->task->id,
             'user_id'=>$this->task->user_id,
+            'machine_name'=>$this->task->name,
             'jobDescription' => $this->task->jobDescription,
             'assignedDate' => $this->task->assignedDate,
             'dueDate' => $this->task->dueDate,

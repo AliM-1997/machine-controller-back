@@ -65,10 +65,10 @@ Route::prefix('v1')->group(function(){
 
 Route::prefix("v1")->group(function(){
     Route::apiResource('machineStatistic',MachineStatisticController::class);
-    Route::get('machineStatistic/machineId/{machineId}',[MachineStatisticController::class,'getStatisticBymachineId']);
+    Route::get('machineStatistics/machineId/{machineId}',[MachineStatisticController::class,'getStatisticBymachineId']);
     Route::get('machineStatistics/byDate', [MachineStatisticController::class, 'getStatisticByDate']);
     Route::get('machineStatistics/comparison', [MachineStatisticController::class, 'getStatisticsForMachinesComparison']);
-    Route::get('machineStatistics/{machineName}', [MachineStatisticController::class, 'getStatisticByName']);
+    Route::get('machineStatistics/{name}', [MachineStatisticController::class, 'getStatisticByName']);
     Route::get('machineStatistics/byName/byDate', [MachineStatisticController::class, 'getStatisticByDateAndMachine']);
     Route::get('machineStatistics/byName/betweenDate', [MachineStatisticController::class, 'getStatisticByNameAndBetweenDate']);
     
@@ -76,6 +76,8 @@ Route::prefix("v1")->group(function(){
 
 Route::prefix('v1')->group(function(){
     Route::apiResource('task',TaskController::class);
+    Route::get('task/machinename/{name}',[TaskController::class,'getTaskByMachineName']);
+
 });
 
 Route::prefix('v1')->middleware('auth')->group(function () {
