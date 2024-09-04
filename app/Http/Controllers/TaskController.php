@@ -55,20 +55,49 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, Task $task)
-    {
-        $task->update($request->validated());
-            $user = $task->user;
-            // if ($user) {
-            //     Notification::send($user, new TaskNotification($task));
-            // }
-            if ($user) {
-                $user->notify(new TaskNotification($task));
-            }
+    public function update(UpdateTaskRequest $request, $taskId)
+{
+    $validatedData = $request->validated();
+    $task = Task::find($taskId);
+
+    if (!$task) {
         return response()->json([
-            'task'=>$task
-        ],200);      
+            'success' => false,
+            'message' => 'Task not found',
+        ], 404);
     }
+    $user = User::where('username', $validatedData['username'])->first();
+    $machine = Machine::where('serial_number', $validatedData['machine_serial_number'])->first();
+    $sparePart = isset($validatedData['sparePart_serial_number'])
+        ? SparePart::where('serial_number', $validatedData['sparePart_serial_number'])->first()
+        : null;
+
+    if (!$user || !$machine) {
+        return response()->json([
+            'success' => false,
+            'message' => 'User or Machine not found',
+        ], 404);
+    }
+    $task->user_id = $user->id;
+    $task->machine_id = $machine->id;
+    $task->spare_part_id = $sparePart ? $sparePart->id : null;
+    $task->jobDescription = $validatedData['jobDescription'];
+    $task->assignedDate = $validatedData['assignedDate'];
+    $task->dueDate = $validatedData['dueDate'];
+    $task->location = $validatedData['location'];
+    $task->status = $validatedData['status'];
+
+    $task->save();
+
+    if ($user) {
+        $user->notify(new TaskNotification($task));
+    }
+
+    return response()->json([
+        'success' => true,
+        'task' => $task
+    ], 200);
+}
 
     /**
      * Remove the specified resource from storage.
