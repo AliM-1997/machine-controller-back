@@ -19,9 +19,9 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'machine_id' => Machine::factory(),
-            'Spare_Part_id' => SparePart::factory(),
+            'user_id' => User::inRandomOrder()->value('id') ?: User::factory(),
+            'machine_id' => Machine::inRandomOrder()->value('id') ?: Machine::factory(),
+            'Spare_Part_id' => SparePart::inRandomOrder()->value('id') ?: SparePart::factory(),
             'jobDescription' => fake()->sentence(),
             'assignedDate' =>fake()->date(),
             'dueDate' => fake()->date(),

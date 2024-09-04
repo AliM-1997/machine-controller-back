@@ -17,7 +17,7 @@ class MachineStatisticFactory extends Factory
     public function definition(): array
     {
         return [
-            'machine_id' =>Machine::factory(),
+            'machine_id' => Machine::inRandomOrder()->value('id') ?: Machine::factory(),
             'MTTR' => fake()->randomFloat(2, 0, 100),
             // 'MTTD' => fake()->randomFloat(2, 0, 100),
             'MTBF' => fake()->randomFloat(2, 0, 10000),

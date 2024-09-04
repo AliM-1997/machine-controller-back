@@ -17,7 +17,7 @@ class MachineInputFactory extends Factory
     public function definition(): array
     {
         return [
-            'machine_id'=>Machine::factory(),
+            'machine_id' => Machine::inRandomOrder()->value('id') ?: Machine::factory(),
             'operating_time'=>fake()->randomfloat(2,0,1000),
             'down_time'=>fake()->randomfloat(2,0,1000),
             'number_of_failure'=>fake()->randomfloat(2,0,1000),
