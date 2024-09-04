@@ -100,9 +100,15 @@ class TaskController extends Controller
             if ($tasks->isEmpty()) {
             return response()->json(["message" => "No Task Found for the given status"]);
         }
-    
-        // Return tasks as JSON response
-        return response()->json(["tasks" => $tasks]);
+            return response()->json(["tasks" => $tasks]);
     }
+    public function getTaskByDate($date)
+    {
+        $tasks=Task::where('dueDate',$date)->get();
+        if ($tasks->isEmpty()) {
+            return response()->json(["message" => "No tasks found for the given date.",], 404);
+        }
     
+        return response()->json(['tasks' => $tasks], 200);
+    }
 }
