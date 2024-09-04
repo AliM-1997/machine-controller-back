@@ -61,6 +61,7 @@ Route::prefix('v1')->group(function(){
     Route::post('user/updateImage/{userid}',[UserController::class,'updateUserImage']);
     Route::get('user/getImage/{userid}',[UserController::class,"getUserImage"]);
     Route::delete('user/deleteImage/{userid}',[UserController::class,'deleteUserImage']);
+    Route::get('user/all/username',[UserController::class,'getAllUserNames']);
 });
 
 Route::prefix("v1")->group(function(){
@@ -79,7 +80,7 @@ Route::prefix('v1')->group(function(){
     Route::get('task/machinename/{name}',[TaskController::class,'getTaskByMachineName']);
     Route::get('task/status/{status}',[TaskController::class,'getTaskBystatus']);
     Route::get('task/date/{date}',[TaskController::class,'getTaskByDate']);
-    Route::get('task/Employee/{username}',[TaskController::class,'getTaskByEmployee']);
+    Route::get('task/username/{username}',[TaskController::class,'getTaskByEmployee']);
 });
 
 Route::prefix('v1')->middleware('auth')->group(function () {
