@@ -116,4 +116,12 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Image deleted successfully.']);
     }
+    public function getAllUserNames()
+    {
+        $username = User::pluck("username");
+        $formattedUsername = $username->map(function ($username) {
+            return ['label' => $username];
+        });
+                return response()->json($formattedUsername);
+    }
 }
