@@ -81,6 +81,7 @@ Route::prefix('v1')->group(function(){
     Route::get('task/status/{status}',[TaskController::class,'getTaskBystatus']);
     Route::get('task/date/{date}',[TaskController::class,'getTaskByDate']);
     Route::get('task/username/{username}',[TaskController::class,'getTaskByEmployee']);
+    Route::post('task/username',[TaskController::class,'createTaskByUsername']);
 });
 
 Route::prefix('v1')->middleware('auth')->group(function () {
