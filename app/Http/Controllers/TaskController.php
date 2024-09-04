@@ -93,5 +93,16 @@ class TaskController extends Controller
     
         return response()->json(['tasks' => $tasks], 200);
     }
-
+    public function getTaskByStatus($status)
+    {
+        $status = trim($status);
+            $tasks = Task::where('status', $status)->get();
+            if ($tasks->isEmpty()) {
+            return response()->json(["message" => "No Task Found for the given status"]);
+        }
+    
+        // Return tasks as JSON response
+        return response()->json(["tasks" => $tasks]);
+    }
+    
 }
