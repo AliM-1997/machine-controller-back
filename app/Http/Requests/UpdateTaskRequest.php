@@ -22,14 +22,15 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'sometimes|nullable|exists:users,id',
-            'machine_id' => 'sometimes|nullable|exists:machines,id',
-            'sparePart_id' => 'sometimes|nullable|exists:spare_parts,id',
+            'username' => 'sometimes|exists:users,username',
+            'machine_serial_number' => 'sometimes|exists:machines,serial_number',
+            'spare_part_serial_number' => 'sometimes|exists:spare_parts,serial_number',
             'jobDescription' => 'sometimes|nullable|string',
             'assignedDate' => 'sometimes|nullable|date',
             'dueDate' => 'sometimes|nullable|date',
             'location' => 'sometimes|nullable|string',
             'status' => 'sometimes|nullable|string',
         ];
+        
     }
 }
