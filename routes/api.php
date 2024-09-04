@@ -79,6 +79,7 @@ Route::prefix('v1')->group(function(){
     Route::get('task/machinename/{name}',[TaskController::class,'getTaskByMachineName']);
     Route::get('task/status/{status}',[TaskController::class,'getTaskBystatus']);
     Route::get('task/date/{date}',[TaskController::class,'getTaskByDate']);
+    Route::get('task/Employee/{username}',[TaskController::class,'getTaskByEmployee']);
 });
 
 Route::prefix('v1')->middleware('auth')->group(function () {
