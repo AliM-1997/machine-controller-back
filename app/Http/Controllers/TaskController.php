@@ -152,7 +152,32 @@ class TaskController extends Controller
             'task' => $task
         ], 201);
     }
- 
+    public function getTaskWithDetails($taskId)
+    {
+        $task = Task::with(['user', 'machine', 'sparePart'])->find($taskId);
+
+        if (!$task) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Task not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'task' => [
+                'id' => $task->id,
+                'username' => $task->user->username,
+                'machine_serial_number' => $task->machine->serial_number,
+                'sparePart_serial_number' => $task->sparePart ? $task->sparePart->serial_number : null,
+                'jobDescription' => $task->jobDescription,
+                'assignedDate' => $task->assignedDate,
+                'dueDate' => $task->dueDate,
+                'location' => $task->location,
+                'status' => $task->status,
+            ]
+        ], 200);
+    }
 
     
 }
