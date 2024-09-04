@@ -111,4 +111,19 @@ class TaskController extends Controller
     
         return response()->json(['tasks' => $tasks], 200);
     }
+
+    public function getTaskByEmployee($username)
+    {
+        $user=User::where('username',$username)->first();
+        if (!$user) {
+            return response()->json(["message" => "User not found."], 404);
+        }
+        $tasks=Task::where('user_id',$user->id)->get();
+        if ($tasks->isEmpty()) {
+            return response()->json(["message" => "No tasks found for the given date.",], 404);
+        }
+    
+        return response()->json(['tasks' => $tasks], 200);
+    }
+
 }
