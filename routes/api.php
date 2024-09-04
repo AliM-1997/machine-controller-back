@@ -78,6 +78,7 @@ Route::prefix('v1')->group(function(){
     Route::apiResource('task',TaskController::class);
     Route::get('task/machinename/{name}',[TaskController::class,'getTaskByMachineName']);
     Route::get('task/status/{status}',[TaskController::class,'getTaskBystatus']);
+    Route::get('task/date/{date}',[TaskController::class,'getTaskByDate']);
 });
 
 Route::prefix('v1')->middleware('auth')->group(function () {
