@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Machine;
 use App\Models\Task;
 use App\Models\User;
 use App\Notifications\TaskNotification;
@@ -76,4 +77,21 @@ class TaskController extends Controller
         $task->delete();
         return response()->json(null,204);
     }
+
+    public function getTaskByMachineName($name)
+    {
+        $machine = Machine::where('name', $name)->first();
+    
+        if (!$machine) {
+            return response()->json(["message" => "Machine not found."], 404);
+        }
+            $tasks = Task::where('machine_id', $machine->id)->get();
+    
+        if ($tasks->isEmpty()) {
+            return response()->json(["message" => "No tasks found for the given machine.",], 404);
+        }
+    
+        return response()->json(['tasks' => $tasks], 200);
+    }
+
 }
