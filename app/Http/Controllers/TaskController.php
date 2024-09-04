@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Machine;
+use App\Models\SparePart;
 use App\Models\Task;
 use App\Models\User;
 use App\Notifications\TaskNotification;
@@ -126,4 +127,33 @@ class TaskController extends Controller
         return response()->json(['tasks' => $tasks], 200);
     }
 
+    public function createTaskByUsername(StoreTaskRequest $request)
+    {
+        $validatedData = $request->validated();
+        $user = User::where('username', $validatedData['username'])->first();
+        $machine = Machine::where('serial_number', $validatedData['machine_serial_number'])->first();
+        $sparePart = null;
+        if (isset($validatedData['sparePart_serial_number'])) {
+            $sparePart = SparePart::where('serial_number', $validatedData['sparePart_serial_number'])->first();   
+        }
+        unset($validatedData['username'], $validatedData['machine_serial_number'], $validatedData['sparePart_serial_number']);
+        
+        $validatedData['user_id'] = $user->id;
+        $validatedData['machine_id'] = $machine->id;
+        $validatedData['spare_Part_id'] = $sparePart ? $sparePart->id : null;
+        
+        $task = Task::create($validatedData);
+        
+        $user->notify(new TaskNotification($task));
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Task created successfully and user notified',
+            'task' => $task
+        ], 201);
+    }
+ 
+
+    
 }
+
