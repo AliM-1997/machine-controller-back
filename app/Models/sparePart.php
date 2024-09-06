@@ -14,7 +14,8 @@ class SparePart extends Model
         'serial_number',
         'quantity',
         'description',
-        'image_path'
+        'image_path',
+        'type',
     ];
     public function task()
     {
