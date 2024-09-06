@@ -98,4 +98,14 @@ class SparePartController extends Controller
 
         return response()->json(['message' => 'Image deleted successfully.']);
     }
+    public function getbytype($type)
+    {
+        $sparePart = SparePart::where('type', $type)->get();
+            if (!$sparePart) {
+            return response()->json(['error' => ' No Spare Part found'], 404);
+        }
+        return response()->json([
+            "machine" => $sparePart
+        ], 200);
+    }
 }
