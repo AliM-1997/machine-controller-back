@@ -22,6 +22,7 @@ class SparePartFactory extends Factory
             'quantity' => fake()->numberBetween(0, 100),
             'description' => fake()->optional()->text(),
             'image_path' => 'path/to/image.jpg',
+            'type'=>fake()->randomElement(['Mechanical', 'Electrical', 'Oil']),
         ];
     }
 }

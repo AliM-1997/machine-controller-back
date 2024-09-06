@@ -50,10 +50,11 @@ Route::prefix('v1')->group(function(){
 });
 
 Route::prefix('v1')->group(function(){
-    Route::apiResource('sparePart',SparePartController::class)->middleware('auth.admin');
+    Route::apiResource('sparePart',SparePartController::class);
     Route::post('sparePart/uploadImage/{sparePartId}',[SparePartController::class,'updateSparePartImage']);
     Route::get('sparePart/getImage/{sparePartId}',[SparePartController::class,'getSparePartImage']);
     Route::delete('sparePart/deleteImage/{sparePartId}',[SparePartController::class,'deleteSparePartImage']);
+    Route::get('sparePart/type/{type}',[SparePartController::class,'getbytype']);
 });
 
 Route::prefix('v1')->group(function(){
