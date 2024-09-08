@@ -108,4 +108,13 @@ class SparePartController extends Controller
             "machine" => $sparePart
         ], 200);
     }
+
+    public function getAllSerialNumbers()
+    {
+        $serialNumbers = SparePart::pluck("serial_number");
+        $formattedSerialNumbers = $serialNumbers->map(function ($serialNumber) {
+            return ['label' => $serialNumber];
+        });
+                return response()->json($formattedSerialNumbers);
+    }
 }
