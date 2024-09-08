@@ -22,7 +22,7 @@ class UpdateMachineStatisticRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'machine_id' => 'sometimes|required|exists:machines,id',
+            'machine_id' => 'sometime|exists:machines,id',
             'MTTR' => 'sometimes|numeric|min:0',
             'MTBF' => 'sometimes|numeric|min:0',
             'availability' => 'sometimes|numeric|min:0|max:1',

@@ -21,6 +21,8 @@ class UpdateMachineRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userID=$this->route("user")->id;
+
         return [
             'name' => 'sometimes|required|string|max:255',
             'serial_number' =>'sometimes|required|string|max:255|unique:machines',
