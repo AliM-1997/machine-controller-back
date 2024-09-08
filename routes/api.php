@@ -55,6 +55,7 @@ Route::prefix('v1')->group(function(){
     Route::get('sparePart/getImage/{sparePartId}',[SparePartController::class,'getSparePartImage']);
     Route::delete('sparePart/deleteImage/{sparePartId}',[SparePartController::class,'deleteSparePartImage']);
     Route::get('sparePart/type/{type}',[SparePartController::class,'getbytype']);
+    Route::get('sparePart/serial/numbers',[SparePartController::class,'getAllSerialNumbers']);
 });
 
 Route::prefix('v1')->group(function(){
