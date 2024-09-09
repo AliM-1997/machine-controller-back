@@ -22,7 +22,7 @@ class StoreMachineInputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'machine_id'=>'required|exists:machines,id|numeric',
+            'serial_number' => 'required|exists:machines,serial_number|string',
             'operating_time'=>'required|numeric|min:0',
             'down_time'=>'required|numeric|min:0',
             'number_of_failure'=>'required|numeric|min:0',

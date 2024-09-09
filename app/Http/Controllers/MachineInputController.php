@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMachineInputRequest;
 use App\Http\Requests\UpdateMachineInputRequest;
+use App\Models\Machine;
 use Illuminate\Http\Request;
 use App\Models\MachineInput;
 
@@ -23,13 +24,28 @@ class MachineInputController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(StoreMachineInputRequest $request)
     {
-        $validate=$request->validated();
-        $machineInput=MachineInput::create($validate);
+        $validated = $request->validated();
+
+        $machine = Machine::where('serial_number', $validated['serial_number'])->first();
+
+        if (!$machine) {
+            return response()->json(['error' => 'Machine with given serial number not found.'], 404);
+        }
+
+        $machineInput = MachineInput::create([
+            'machine_id' => $machine->id, 
+            'operating_time' => $validated['operating_time'],
+            'down_time' => $validated['down_time'],
+            'number_of_failure' => $validated['number_of_failure'],
+            'actual_output' => $validated['actual_output'],
+        ]);
+
         return response()->json([
-            "machineInput"=>$machineInput
-        ],201);
+            'machineInput' => $machineInput
+        ], 201);
     }
 
     /**
