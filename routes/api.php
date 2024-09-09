@@ -74,6 +74,7 @@ Route::prefix("v1")->group(function(){
     Route::get('machineStatistics/{name}', [MachineStatisticController::class, 'getStatisticByName']);
     Route::get('machineStatistics/byName/byDate', [MachineStatisticController::class, 'getStatisticByDateAndMachine']);
     Route::get('machineStatistics/byName/betweenDate', [MachineStatisticController::class, 'getStatisticByNameAndBetweenDate']);
+    Route::post('machineStatistics/calculations',[MachineStatisticController::class,"StatisticCalculations"]);
     
 });
 
