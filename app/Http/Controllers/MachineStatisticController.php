@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\getStaticByDateRequest;
+use App\Http\Requests\StoreMachineInputRequest;
 use App\Http\Requests\StoreMachineStatisticRequest;
 use App\Http\Requests\UpdateMachineStatisticRequest;
 use App\Models\Machine;
+use App\Models\MachineInput;
 use App\Models\MachineStatistic;
 use App\Services\MachineStatisticService;
 use Database\Seeders\machineInputSeeder;
@@ -200,4 +202,29 @@ return response()->json([
 ]);
 
 }
+public function StatisticCalculations(StoreMachineInputRequest $request)
+{
+    $validated = $request->validated();
+
+    $machine = Machine::where('serial_number', $validated['serial_number'])->first();
+
+    if (!$machine) {
+        return response()->json(['error' => 'Machine with given serial number not found.'], 404);
+    }
+
+    $machineInput = MachineInput::create([
+        'machine_id' => $machine->id, 
+        'operating_time' => $validated['operating_time'],
+        'down_time' => $validated['down_time'],
+        'number_of_failure' => $validated['number_of_failure'],
+        'actual_output' => $validated['actual_output'],
+    ]);
+
+    $this->machineStatisticService->calculateAndStoreStatistics($machine->id, now()->toDateString());
+
+    return response()->json([
+        'machineInput' => $machineInput
+    ], 201);
+}
+
 }

@@ -41,8 +41,10 @@ class MachineController extends Controller
     public function destroy(Machine $machine)
     {
         $machine->delete();
-        return response()->json("null",204);
-    }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Machine deleted successfully'
+        ], 200);    }
     public function store(StoreMachineRequest $request)
     {
         $validate=$request->validated();
