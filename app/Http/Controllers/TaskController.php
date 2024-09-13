@@ -208,6 +208,28 @@ class TaskController extends Controller
         ], 200);
     }
 
-    
+    public function getAllTasksWithDetails()
+{
+    $tasks = Task::with(['user', 'machine'])->get();
+
+    $formattedTasks = $tasks->map(function ($task) {
+        return [
+            'id' => $task->id,
+            'username' => $task->user->username,
+            'machine_serial_number' => $task->machine->serial_number,
+            'sparePart_serial_number' => $task->sparePart ? $task->sparePart->serial_number : null,
+            'jobDescription' => $task->jobDescription,
+            'assignedDate' => $task->assignedDate,
+            'dueDate' => $task->dueDate,
+            'location' => $task->location,
+            'status' => $task->status,
+        ];
+    });
+
+    return response()->json([
+        'success' => true,
+        'tasks' => $formattedTasks
+    ], 200);
+}
 }
 
