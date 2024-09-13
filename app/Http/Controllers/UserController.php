@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,12 +17,33 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $users=User::all();
-        return response()->json([
-            "users"=>$users
-        ]);
-    }
+{
+    $users = User::all();
+
+    $usersWithTaskCounts = $users->map(function ($user) {
+        $completedTasksCount = Task::where('user_id', $user->id)
+                                   ->where('status', 'completed')
+                                   ->count();
+                                   
+        $nonCompletedTasksCount = Task::where('user_id', $user->id)
+                                      ->where('status', '!=', 'completed')
+                                      ->count();
+
+        return [
+            'id' => $user->id,
+            'name'=>$user->name,
+            'username' => $user->username,
+            'role'=>$user->role,
+            'completed_tasks_count' => $completedTasksCount,
+            'non_completed_tasks_count' => $nonCompletedTasksCount,
+        ];
+    });
+
+    return response()->json([
+        'users' => $usersWithTaskCounts
+    ]);
+}
+
 
     /**
      * Store a newly created resource in storage.
