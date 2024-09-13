@@ -18,7 +18,9 @@ return new class extends Migration
             $table->integer("quantity")->default(0);
             $table->text("description")->nullable();
             $table->string("image_path")->nullable();
-            $table->enum('type', ['Mechanical', 'Electrical','Oil']);               
+            $table->enum('type', ['Mechanical', 'Electrical','Oil']);  
+            $table->decimal('standard_pressure', 8, 2)->nullable(); 
+            $table->integer('life_cycle')->nullable();              
             $table->timestamps();
 
         });
