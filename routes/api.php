@@ -1,8 +1,11 @@
 <?php
 
+use App\Events\NotificationCountEvent;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GPTController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MachineInputController;
+use App\Http\Controllers\MachineSparePartController;
 use App\Http\Controllers\MachineStatisticController;
 use App\Http\Controllers\SparePartController;
 use App\Http\Controllers\TaskController;
@@ -13,6 +16,9 @@ use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Monolog\Handler\RotatingFileHandler;
+use App\Http\Controllers\OpenAIController;
+use App\Http\Controllers\SensorDataController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +30,8 @@ use Monolog\Handler\RotatingFileHandler;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+
 Route::controller(AuthController::class)->group(function () {
     Route::post('v1/login', 'login')->name('login');
     Route::post('v1/register', 'register');
@@ -31,9 +39,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('v1/refresh', 'refresh');
 
 });
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::prefix('v1')->group(function () {
     Route::apiResource('machineInput', MachineInputController::class);
 });
@@ -46,6 +56,8 @@ Route::prefix('v1')->group(function(){
     Route::post('machine/uploadImage/{machineId}', [MachineController::class, 'updateMachineImage']);
     Route::get('machine/getImage/{machineId}', [MachineController::class, 'getMachineImage']);
     Route::delete('machine/deleteImage/{machineId}', [MachineController::class, 'deleteMachineImage']);
+    Route::patch('/machines/addsparepart/{serialnumber}', [MachineController::class, 'addSparePartToMachine']);
+
     
 });
 
@@ -86,6 +98,7 @@ Route::prefix('v1')->group(function(){
     Route::get('task/username/{username}',[TaskController::class,'getTaskByEmployee']);
     Route::post('task/username',[TaskController::class,'createTaskByUsername']);
     Route::get('task/all/details/{taskId}',[TaskController::class,'getTaskWithDetails']);
+    Route::get('task/all/details',[TaskController::class,'getAllTasksWithDetails']);
 });
 
 Route::prefix('v1')->middleware('auth')->group(function () {
@@ -93,3 +106,20 @@ Route::prefix('v1')->middleware('auth')->group(function () {
     Route::patch('notifications/{notificationId}/read', [NotificationController::class, 'markNotificationAsRead']);
     Route::get('notifications/unread', [NotificationController::class, 'getUnreadNotifications']);
 });
+
+// routes/api.php
+
+Route::post('/generate-text', [GPTController::class, 'generateText']);
+
+Route::prefix('v1')->middleware('auth')->group(function () {
+    Route::post('/machines/spareparts/create', [MachineSparePartController::class, 'create']);
+    Route::post('/machine-spare-part/relationship', [MachineSparePartController::class, 'getRelationship']);
+    Route::post('machine/spareparts/get', [MachineSparePartController::class, 'getSparePartsByMachine']);
+
+});
+Route::prefix('v1')->middleware('auth')->group(function () {
+Route::post('/sensor-data', [SensorDataController::class, 'store']);
+});
+
+
+
