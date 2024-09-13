@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('last_maintenance');
             $table->integer('unit_per_hour')->default(0);
+            $table->unsignedDecimal('operating_time', 8, 2)->default(0); 
             $table->timestamps();
         });
     }
