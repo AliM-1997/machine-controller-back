@@ -140,14 +140,15 @@ class MachineStatisticController extends Controller
         }
     
         $statistics = MachineStatistic::where('machine_id', $machine->id)->get();
-    
-        if ($statistics->isEmpty()) {
-            return response()->json(['message' => 'No statistics found for this machine.'], 404);
+        $inputs = MachineInput::where('machine_id', $machine->id)->get();
+        
+        if ($statistics->isEmpty() && $inputs->isEmpty()) {
+            return response()->json(['message' => 'No statistics or inputs found for this machine.'], 404);
         }
-    
-        return response()->json([
+            return response()->json([
             'machine' => $machine,
-            'statistics' => $statistics
+            'statistics' => $statistics,
+            'machineInput' => $inputs
         ]);
     }
 
@@ -219,6 +220,11 @@ public function StatisticCalculations(StoreMachineInputRequest $request)
         'number_of_failure' => $validated['number_of_failure'],
         'actual_output' => $validated['actual_output'],
     ]);
+
+    $currentOperatingTime = $machine->operating_time;
+    $newOperatingTime = $currentOperatingTime + $validated['operating_time'];
+    $machine->operating_time = $newOperatingTime;
+    $machine->save();
 
     $this->machineStatisticService->calculateAndStoreStatistics($machine->id, now()->toDateString());
 
