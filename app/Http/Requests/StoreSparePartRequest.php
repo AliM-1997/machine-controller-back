@@ -27,6 +27,8 @@ class StoreSparePartRequest extends FormRequest
             'quantity'=>'nullable|numeric|min:0|default:0',
             'description' => 'nullable|string|max:5000',
             'image_path' => 'nullable|string|max:255',
+            'life_cycle' => 'nullable|numeric|min:0|max:10000',
+            'standard_temperature' => 'nullable|numeric|min:-273|max:5000',
         ];
     }
 }
