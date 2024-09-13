@@ -28,7 +28,10 @@ class SparePartController extends Controller
     public function destroy(SparePart $sparePart)
     {
         $sparePart->delete();
-        return response()->json(null,204);
+        return response()->json([
+            'success' => true,
+            'message' => 'Spare part deleted successfully.'
+        ], 200);
     }
     public function store(StoreSparePartRequest $requset)
     {
@@ -38,13 +41,14 @@ class SparePartController extends Controller
             "sparePart"=>$sparePart
         ],201);
     }
-    public function update(UpdateSparePartRequest $requset,SparePart $sparePart)
+    public function update(UpdateSparePartRequest $request, SparePart $sparePart)
     {
-        $sparePart->update($requset->validated());
+        $sparePart->update($request->validated());
         return response()->json([
-            "spare_part"=>$sparePart
-        ],200);
+            "spare_part" => $sparePart
+        ], 200);
     }
+    
     public function updateSparePartImage(Request $request, $sparePartId)
     {
         // Validate the image file
