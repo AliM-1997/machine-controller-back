@@ -23,9 +23,9 @@ class MachineStatisticService
         $totalDownTime = $machineInputs->sum('down_time');
         $totalFailures = $machineInputs->sum('number_of_failure');
         $totalOutput = $machineInputs->sum('actual_output');
-        $theoreticalOutput = $machineInputs->sum('theoretical_output'); 
+        $unitPerHour = DB::table('machines')->where('id', $machineId)->value('unit_per_hour');
         $mtbr = $machineInputs->pluck('mtbr')->first(); 
-
+        $theoreticalOutput=$unitPerHour;
         $MTTR = $totalFailures ? $totalDownTime / $totalFailures : null;
         $MTBF = $totalFailures ? $totalOperatingTime / $totalFailures : null;
         $availability = ($MTBF && ($MTBF + $mtbr)) ? $MTBF / ($MTBF + $mtbr) : null;
