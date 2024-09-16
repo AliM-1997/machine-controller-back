@@ -33,7 +33,11 @@ class UserController extends Controller
             'id' => $user->id,
             'name'=>$user->name,
             'username' => $user->username,
+            'email'=>$user->email,
+            'image_path'=>$user->image_path,
             'role'=>$user->role,
+            'location'=>$user->location,
+            'phone_number'=>$user->phone_number,
             'completed_tasks_count' => $completedTasksCount,
             'non_completed_tasks_count' => $nonCompletedTasksCount,
         ];
@@ -69,12 +73,23 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, user $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
-        return response()->json([
-            'user'=>$user
-        ],200);
+        $validated = $request->validated();
+    
+        if (isset($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+    
+        try {
+            $user->update($validated);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Update failed'], 500);
+        }
+    
+        return response()->json(['user' => $user], 200);
     }
 
     /**
@@ -146,4 +161,5 @@ class UserController extends Controller
         });
                 return response()->json($formattedUsername);
     }
+    
 }
