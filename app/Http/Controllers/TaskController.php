@@ -123,38 +123,122 @@ class TaskController extends Controller
     
         return response()->json(['tasks' => $tasks], 200);
     }
-    public function getTaskByStatus($status)
-    {
-        $status = trim($status);
-            $tasks = Task::where('status', $status)->get();
-            if ($tasks->isEmpty()) {
-            return response()->json(["message" => "No Task Found for the given status"]);
-        }
-            return response()->json(["tasks" => $tasks]);
-    }
-    public function getTaskByDate($date)
-    {
-        $tasks=Task::where('dueDate',$date)->get();
-        if ($tasks->isEmpty()) {
-            return response()->json(["message" => "No tasks found for the given date.",], 404);
-        }
     
-        return response()->json(['tasks' => $tasks], 200);
+public function getTaskByMachinSerialNumber($serialnumber)
+{
+    $machine = Machine::where('serial_number', $serialnumber)->first();
+
+    if (!$machine) {
+        return response()->json(["message" => "Machine not found."], 404);
     }
+
+    $tasks = Task::with(['user', 'sparePart'])->where('machine_id', $machine->id)->get();
+
+    if ($tasks->isEmpty()) {
+        return response()->json(["message" => "No tasks found for the given machine."], 404);
+    }
+
+    $taskDetails = $tasks->map(function ($task) {
+        return [
+            'id' => $task->id,
+            'username' => $task->user->username, 
+            'machine_serial_number' => $task->machine->serial_number,
+            'sparePart_serial_number' => $task->sparePart ? $task->sparePart->serial_number : null, 
+            'jobDescription' => $task->jobDescription,
+            'assignedDate' => $task->assignedDate,
+            'dueDate' => $task->dueDate,
+            'location' => $task->location,
+            'status' => $task->status,
+        ];
+    });
+
+    return response()->json(['tasks' => $taskDetails], 200);
+}
+
+public function getTaskByStatus($status)
+{
+    $status = trim($status);
+    $tasks = Task::with(['user', 'machine', 'sparePart'])->where('status', $status)->get();
+
+    if ($tasks->isEmpty()) {
+        return response()->json(["message" => "No tasks found for the given status."], 404);
+    }
+
+    $taskDetails = $tasks->map(function ($task) {
+        return [
+            'id' => $task->id,
+            'username' => $task->user->username,
+            'machine_serial_number' => $task->machine->serial_number,
+            'sparePart_serial_number' => $task->sparePart ? $task->sparePart->serial_number : null,
+            'jobDescription' => $task->jobDescription,
+            'assignedDate' => $task->assignedDate,
+            'dueDate' => $task->dueDate,
+            'location' => $task->location,
+            'status' => $task->status,
+        ];
+    });
+
+    return response()->json(['tasks' => $taskDetails], 200);
+}
+
+public function getTaskByDate($date)
+{
+    $tasks = Task::with(['user', 'machine', 'sparePart'])->where('dueDate', $date)->get();
+
+    if ($tasks->isEmpty()) {
+        return response()->json(["message" => "No tasks found for the given date."], 404);
+    }
+
+    $taskDetails = $tasks->map(function ($task) {
+        return [
+            'id' => $task->id,
+            'username' => $task->user->username,
+            'machine_serial_number' => $task->machine->serial_number,
+            'sparePart_serial_number' => $task->sparePart ? $task->sparePart->serial_number : null,
+            'jobDescription' => $task->jobDescription,
+            'assignedDate' => $task->assignedDate,
+            'dueDate' => $task->dueDate,
+            'location' => $task->location,
+            'status' => $task->status,
+        ];
+    });
+
+    return response()->json(['tasks' => $taskDetails], 200);
+}
+
 
     public function getTaskByEmployee($username)
     {
-        $user=User::where('username',$username)->first();
+        // Fetch the user by username
+        $user = User::where('username', $username)->first();
+        
         if (!$user) {
             return response()->json(["message" => "User not found."], 404);
         }
-        $tasks=Task::where('user_id',$user->id)->get();
+        
+        $tasks = Task::with(['machine', 'sparePart'])->where('user_id', $user->id)->get();
+    
         if ($tasks->isEmpty()) {
-            return response()->json(["message" => "No tasks found for the given date.",], 404);
+            return response()->json(["message" => "No tasks found for the given user."], 404);
         }
     
-        return response()->json(['tasks' => $tasks], 200);
+        $taskDetails = $tasks->map(function ($task) {
+            return [
+                'id' => $task->id,
+                'username' => $task->user->username,
+                'machine_serial_number' => $task->machine->serial_number, 
+                'sparePart_serial_number' => $task->sparePart ? $task->sparePart->serial_number : null, 
+                'jobDescription' => $task->jobDescription,
+                'assignedDate' => $task->assignedDate,
+                'dueDate' => $task->dueDate,
+                'location' => $task->location,
+                'status' => $task->status,
+            ];
+        });
+    
+        return response()->json(['tasks' => $taskDetails], 200);
     }
+    
 
     public function createTaskByUsername(StoreTaskRequest $request)
     {
