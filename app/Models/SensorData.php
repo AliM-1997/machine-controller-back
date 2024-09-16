@@ -10,14 +10,6 @@ class SensorData extends Model
     use HasFactory;
 
     protected $fillable = [
-        'temperature', 
-        'humidity',
-        'air_temperature',
-        'process_temperature',
-        'rotational_speed',
-        'torque',
-        'tool_wear',
-        'lifecycle',
-        'operational_time'
+        'Temperature', 
     ];
 }
