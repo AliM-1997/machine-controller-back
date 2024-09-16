@@ -28,7 +28,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'sometimes|string|email|max:255|unique:users,email,'.$userID,
             'phone_number' => 'nullable|string|max:20|unique:users,phone_number,' . $userID,
             'role' => 'nullable|in:admin,user',
-            'password' => 'sometimes|string|min:8|confirmed', 
+            'password' => 'nullable|string|min:8|confirmed', 
             'location' => 'nullable|string|max:255',
         ];
     }
