@@ -9,18 +9,24 @@ class SensorDataController extends Controller
 {
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'humidity' => 'required|numeric',
-            'air_temperature' => 'required|numeric',
-            'process_temperature' => 'required|numeric',
-            'rotational_speed' => 'required|numeric',
-            'torque' => 'required|numeric',
-            'operational_time' => 'required|numeric',
-        ]);
+        if ($request->isJson()) {
+            $data = $request->json()->all();
 
-        // Save data to the database
-        SensorData::create($validatedData);
 
-        return response()->json(['message' => 'Data received successfully'], 200);
+            if (isset($data['Temperature'])) {
+                $sensorData = new SensorData();
+                $sensorData->Temperature = $data['Temperature'];
+                $sensorData->save();
+
+                return response()->json(['message' => 'Data received successfully'], 200)
+                    ->header('Access-Control-Allow-Origin', '*')
+                    ->header('Access-Control-Allow-Methods', 'POST')
+                    ->header('Access-Control-Allow-Headers', 'Content-Type');
+            } else {
+                return response()->json(['error' => 'Invalid data received', 'received_data' => $data], 400);
+            }
+        } else {
+            return response()->json(['error' => 'Invalid data format'], 400);
+        }
     }
 }
