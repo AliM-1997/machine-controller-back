@@ -28,6 +28,6 @@ class Task extends Model
     }
     public function sparePart()
     {
-        return $this->belongsTo(Spare_Part::class);
+        return $this->belongsTo(SparePart::class);
     }
 }

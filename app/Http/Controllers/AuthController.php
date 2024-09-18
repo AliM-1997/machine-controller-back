@@ -77,15 +77,25 @@ class AuthController extends Controller
     }
 
     public function refresh()
-    {
+{
+    try {
+        $newToken = Auth::refresh(); 
+        
         return response()->json([
             'status' => 'success',
             'user' => Auth::user(),
             'authorisation' => [
-                'token' => Auth::refresh(),
+                'token' => $newToken,
                 'type' => 'bearer',
-            ]
+            ],
         ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Token refresh failed',
+        ], 401);
     }
+}
 
+    
 }

@@ -66,4 +66,18 @@ class User extends Authenticatable implements JWTSubject{
 {
     return $this->hasMany(Task::class);
 }
+//     public function unreadNotifications()
+//         {
+//             return $this->unreadNotifications;
+//         }
+
+//     public function readNotifications()
+//     {
+//         return $this->readNotifications;
+//     }
+  
+//    public function notify($notification)
+//    {
+//        $this->notify($notification);
+//    }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\SparePart;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +17,7 @@ class MachineFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
             'name' => fake()->word(),
             'serial_number' => 'SN' . fake()->unique()->numberBetween(1000, 9999),

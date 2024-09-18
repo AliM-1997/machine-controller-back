@@ -17,7 +17,8 @@ class Machine extends Model
         'image_path',
         'description',
         'last_maintenance',
-        'unit_per_hour'    
+        'unit_per_hour',
+
     ];
     public function task()
     {
@@ -31,5 +32,10 @@ class Machine extends Model
     {
         return $this->hasMany(MachineInput::class);
     }
+    public function spareParts()
+    {
+        return $this->hasMany(MachineSparePart::class, 'machine_serial_number', 'serial_number');
+    }
+
 }
 

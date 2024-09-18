@@ -14,10 +14,17 @@ class SparePart extends Model
         'serial_number',
         'quantity',
         'description',
-        'image_path'
+        'image_path',
+        'type',
+        'standard_pressure',
+        'life_cycle',
     ];
     public function task()
     {
         return $this->hasMany(Task::class);
+    }
+    public function machineSpareParts()
+    {
+        return $this->hasMany(MachineSparePart::class, 'spare_part_serial_number', 'serial_number');
     }
 }

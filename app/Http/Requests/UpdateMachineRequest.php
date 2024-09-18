@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule; // Add this import
 
 class UpdateMachineRequest extends FormRequest
 {
@@ -21,9 +22,17 @@ class UpdateMachineRequest extends FormRequest
      */
     public function rules(): array
     {
+        $machineId = $this->route('machine'); 
+
         return [
             'name' => 'sometimes|required|string|max:255',
-            'serial_number' =>'sometimes|required|string|max:255|unique:machines',
+            'serial_number' => [
+                'sometimes',
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('machines')->ignore($machineId)
+            ],
             'status' => 'sometimes|required|in:active,under maintenance,attention',
             'location' => 'nullable|string|max:255',
             'image_path' => 'nullable|string|max:255',

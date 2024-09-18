@@ -11,8 +11,24 @@ use Illuminate\Support\Facades\Validator;
 
 class MachineController extends Controller
 {
-    public function index()
+    public function getSerialNumbers()
     {
+        $serialNumbers = Machine::pluck("serial_number");
+        $formattedSerialNumbers = $serialNumbers->map(function ($serialNumber) {
+            return ['label' => $serialNumber];
+        });
+                return response()->json($formattedSerialNumbers);
+    }
+    public function getAllName()
+    {
+        $name = Machine::pluck("name");
+        $formattedname= $name->map(function ($name) {
+            return ['label' => $name];
+        });
+                return response()->json($formattedname);
+    }
+    public function index()
+    {   
         $machine=Machine::all();
         return response()->json([
             "machineInputs"=>$machine
@@ -25,8 +41,10 @@ class MachineController extends Controller
     public function destroy(Machine $machine)
     {
         $machine->delete();
-        return response()->json("null",204);
-    }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Machine deleted successfully'
+        ], 200);    }
     public function store(StoreMachineRequest $request)
     {
         $validate=$request->validated();
@@ -93,4 +111,15 @@ class MachineController extends Controller
         }
         return response()->json(['message' => 'Image deleted successfully.']);
     }
+    public function GetByMachineName($name)
+    {
+        $machine = Machine::where('name', $name)->first();
+            if (!$machine) {
+            return response()->json(['error' => 'Machine not found'], 404);
+        }
+        return response()->json([
+            "machine" => $machine
+        ], 200);
+    }
+
 }
