@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Notifications;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Machine;
@@ -37,6 +38,8 @@ class TaskController extends Controller
         if ($user) {
             Notification::send($user, new TaskNotification($task));
         }
+        event(new Notifications($user->name, "A new task has been assigned to you"));
+
         return response()->json([
             'success' => true,
             'message' => 'Task created successfully and user notified',
@@ -315,5 +318,27 @@ public function getTaskByDate($date)
         'tasks' => $formattedTasks
     ], 200);
 }
+public function addTaskReport(Request $request, $taskId)
+{
+    $request->validate([
+        'user_report' => 'required|string',
+    ]);
+
+    
+    $task = Task::find($taskId);
+
+    if (!$task) {
+        return response()->json(['message' => 'Task not found.'], 404);
+    }
+
+    $task->user_report = $request->input('user_report');
+    $task->status = 'Completed'; 
+
+    $task->save();
+
+    return response()->json(['message' => 'Task report added and status updated to done.', 'task' => $task], 200);
+}
+
+
 }
 
