@@ -7,6 +7,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
 
 class Notifications implements ShouldBroadcast
 {
@@ -20,10 +21,10 @@ class Notifications implements ShouldBroadcast
         $this->user = $user;
         $this->notification = $notification;
     }
-
+    // id for the user
     public function broadcastOn()
     {
-        return new Channel('notifications');
+        return new PrivateChannel('notifications.' . $this->user);
     }
 
     public function broadcastAs()
@@ -39,4 +40,3 @@ class Notifications implements ShouldBroadcast
         ];
     }
 }
-    
