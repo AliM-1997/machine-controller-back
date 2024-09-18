@@ -30,6 +30,7 @@ class UpdateTaskRequest extends FormRequest
             'dueDate' => 'sometimes|nullable|date',
             'location' => 'sometimes|nullable|string',
             'status' => 'sometimes|nullable|string',
+            'User Report' => 'sometimes|nullable|string',
         ];
         
     }
