@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\Notifications;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
@@ -30,28 +31,25 @@ class NotificationController extends Controller
      */
     public function markNotificationAsRead($notificationId)
     {
-        // Get the authenticated user
         $user = Auth::user();
         
-        // Find the notification belonging to the user
         $notification = $user->notifications()->find($notificationId);
     
-        // Check if the notification exists
         if ($notification) {
-            // Mark the notification as read
             $notification->markAsRead();
-    
-            // Optionally get the unread notifications count
-            // $unreadCount = $user->unreadNotifications->count();
-    
-            // Optionally broadcast the notification update event
+            $taskId = $notification->data['task_id'];
+
+            $task = Task::find($taskId);
+            if ($task) {
+                $task->status = 'in progress';  
+                $task->save();
+            }
+
             broadcast(new Notifications($user->name, $notification->id));
     
-            // Return a success response
             return response()->json(['message' => 'Notification marked as read.'], 200);
         }
     
-        // Return an error if the notification is not found
         return response()->json(['message' => 'Notification not found.'], 404);
     }
     
