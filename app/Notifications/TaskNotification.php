@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class TaskNotification extends Notification
 {
@@ -27,7 +28,7 @@ class TaskNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database','broadcast'];
     }
 
 
@@ -48,5 +49,19 @@ class TaskNotification extends Notification
             'location' => $this->task->location,
             'status' => $this->task->status,
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'task_id' => $this->task->id,
+            'user_id' => $this->task->user_id,
+            'machine_name' => $this->task->machine->name ?? 'N/A',
+            'jobDescription' => $this->task->jobDescription,
+            'assignedDate' => $this->task->assignedDate,
+            'dueDate' => $this->task->dueDate,
+            'location' => $this->task->location,
+            'status' => $this->task->status,
+        ]);
     }
 }
