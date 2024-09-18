@@ -100,28 +100,27 @@ Route::prefix('v1')->group(function(){
     Route::post('task/username',[TaskController::class,'createTaskByUsername']);
     Route::get('task/all/details/{taskId}',[TaskController::class,'getTaskWithDetails']);
     Route::get('task/all/details',[TaskController::class,'getAllTasksWithDetails']);
+    Route::post('task/user/report/{taskId}',[TaskController::class,'addTaskReport']);
 });
 
-Route::prefix('v1')->middleware('auth')->group(function () {
+Route::prefix('v1')->group(function () {
     Route::get('notifications', [NotificationController::class, 'getAllNotifications']);
     Route::patch('notifications/{notificationId}/read', [NotificationController::class, 'markNotificationAsRead']);
     Route::get('notifications/unread', [NotificationController::class, 'getUnreadNotifications']);
 });
 
-// routes/api.php
-
 Route::post('/generate-text', [GPTController::class, 'generateText']);
 
-Route::prefix('v1')->middleware('auth')->group(function () {
+Route::prefix('v1')->group(function () {
     Route::post('/machines/spareparts/create', [MachineSparePartController::class, 'create']);
     Route::post('/machine-spare-part/relationship', [MachineSparePartController::class, 'getRelationship']);
     Route::post('machine/spareparts/get', [MachineSparePartController::class, 'getSparePartsByMachine']);
 
 });
-// Route::prefix('v1')->group(function () {
-// Route::post('/sensordata', [SensorDataController::class, 'store']);
-// });
-Route::post('/v1/sensor-data', [SensorDataController::class, 'store']);
+Route::prefix('v1')->group(function () {
+    Route::post('/sensordata', [SensorDataController::class, 'store']);
+    Route::get('/sensordata/last', [SensorDataController::class, 'getsensordata']);
+});
 
 
 

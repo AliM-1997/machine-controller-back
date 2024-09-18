@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->text('jobDescription'); 
                 $table->date('assignedDate'); 
                 $table->date('dueDate');
-                $table->enum('status', ['Completed', 'Risked','Delayed','In Progress','Pending'])->default('Pending');               
+                $table->enum('status', ['Completed', 'Risked','Delayed','In Progress','Pending'])->default('Pending');
                 $table->string("location");
                 $table->timestamps(); 
             });
