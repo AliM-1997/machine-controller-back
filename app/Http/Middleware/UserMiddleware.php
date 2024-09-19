@@ -26,7 +26,7 @@ class UserMiddleware
             ], 401);
         }
 
-        if ($user->role != "user") {
+        if ($user->role !== "user" && $user->role !== "admin") {
             return response()->json([
                 "message" => "unauthorized",
                 "details" => "User does not have the required role"
