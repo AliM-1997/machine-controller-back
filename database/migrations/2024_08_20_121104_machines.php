@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('machines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('username')->nullable()->unique();
-            $table->string('email')->unique();
-            $table->string('phone_number')->nullable()->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->enum('role', ['admin', 'user'])->default('user'); 
-            $table->string('password');
+            $table->string('serial_number')->unique();
+            $table->enum('status', ['active', 'under maintenance', 'attention'])->default('active');
             $table->string('location')->nullable();
             $table->string('image_path')->nullable();
-            $table->rememberToken();
+            $table->text('description')->nullable();
+            $table->date('last_maintenance');
+            $table->integer('unit_per_hour')->default(0);
+            $table->unsignedDecimal('operating_time', 8, 2)->default(0); 
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('machines');
     }
 };
