@@ -28,7 +28,7 @@ class TaskNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database','broadcast'];
+        return ['database'];
     }
 
 
@@ -51,17 +51,5 @@ class TaskNotification extends Notification
         ];
     }
 
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'task_id' => $this->task->id,
-            'user_id' => $this->task->user_id,
-            'machine_name' => $this->task->machine->name ?? 'N/A',
-            'jobDescription' => $this->task->jobDescription,
-            'assignedDate' => $this->task->assignedDate,
-            'dueDate' => $this->task->dueDate,
-            'location' => $this->task->location,
-            'status' => $this->task->status,
-        ]);
-    }
+
 }

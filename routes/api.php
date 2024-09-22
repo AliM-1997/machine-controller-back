@@ -120,9 +120,9 @@ Route::prefix('v1')->middleware('auth.admin')->group(function () {
     Route::post('machine/spareparts/get', [MachineSparePartController::class, 'getSparePartsByMachine']);
 
 });
-Route::prefix('v1')->middleware('auth.admin')->group(function () {
+Route::prefix('v1')->group(function () {
     Route::post('/sensordata', [SensorDataController::class, 'store']);
-    Route::get('/sensordata/last', [SensorDataController::class, 'getsensordata']);
+    Route::get('/sensordata/last', [SensorDataController::class, 'getsensordata'])->middleware('auth.admin');
 });
 
 

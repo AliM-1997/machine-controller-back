@@ -38,7 +38,7 @@ class TaskController extends Controller
         if ($user) {
             Notification::send($user, new TaskNotification($task));
         }
-        event(new Notifications($user->name, "A new task has been assigned to you"));
+        // event(new Notifications($user->name, "A new task has been assigned to you"));
 
         return response()->json([
             'success' => true,
