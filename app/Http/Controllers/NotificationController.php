@@ -65,7 +65,7 @@ class NotificationController extends Controller
         $unreadNotifications = $user->unreadNotifications;
         $unreadCount = $user->unreadNotifications->count();
 
-        broadcast(new Notifications($user,$unreadNotifications));
+        // broadcast(new Notifications($user,$unreadNotifications));
         return response()->json(['notifications' => $unreadNotifications , 'count'=>$unreadCount], 200);
     }
 

@@ -10,15 +10,14 @@ class SensorDataController extends Controller
 {
     public function store(Request $request)
     {
+
         if ($request->isJson()) {
             $data = $request->json()->all();
 
-
-            if (isset($data['Temperature'])) {
+            if (isset($data['Temperature'])!==null) {
                 $sensorData = new SensorData();
                 $sensorData->Temperature = $data['Temperature'];
                 $sensorData->save();
-
             // event(new SensorDataRecived(["Temperature",$sensorData]));
                 return response()->json(['message' => 'Data received successfully'], 200)
                     ->header('Access-Control-Allow-Origin', '*')
