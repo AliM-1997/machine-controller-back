@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class AuthController extends Controller
 {
@@ -96,6 +98,21 @@ class AuthController extends Controller
         ], 401);
     }
 }
+public function verifyToken(Request $request)
+{
+    $user = $request->user();
 
-    
+    if (!$user) {
+        return response()->json([
+            'message' => 'Invalid token or unauthorized'
+        ], 401);
+    }
+    $role = $user->role;
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Token is valid',
+        'user' => $user,
+        'role' => $role,
+    ]);
+} 
 }

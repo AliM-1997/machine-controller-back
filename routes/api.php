@@ -37,7 +37,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('v1/register', 'register');
     Route::post('v1/logout', 'logout');     
     Route::post('v1/refresh', 'refresh');
-
+    Route::get('v1/verifyToken', 'verifyToken');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
